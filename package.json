@@ -1,0 +1,27 @@
+{
+  "name": "burger",
+  "version": "1.0.0",
+  "description": "Burgers from database are displayed depending on their devoured state.",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express-handlebars": "^3.0.0",
+    "express": "^4.16.3",
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/max-liao/burger.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/max-liao/burger/issues"
+  },
+  "homepage": "https://github.com/max-liao/burger#readme"
+}
