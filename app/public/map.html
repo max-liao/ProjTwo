@@ -25,6 +25,12 @@
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+  <!-- Google maps markerclusterer -->
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+
+  <!-- Initialize Google Maps -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6b6PThKZfWpNBOo_s6f1caBl9iB2PG4E&callback=initMap"></script>
+
   </head>
 
   <body>
@@ -56,24 +62,5 @@
 
     <!-- Script -->
     <script type="text/javascript" src="js/map.js"></script>
-    <script>
-      function initMap() {
-        //Map Locations
-        var atlanta = {lat: 33.748995, lng: -84.387982};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 3,
-          center: atlanta
-        });
-        var marker = new google.maps.Marker({position: atlanta});
-          marker.setMap(map);
-      }
-    </script>
-
-    <!-- Google maps markerclusterer -->
-    <!-- <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script> -->
-
-    <!-- Initialize Google Maps -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6b6PThKZfWpNBOo_s6f1caBl9iB2PG4E&callback=initMap"></script>
-
   </body>
 </html>

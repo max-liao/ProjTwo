@@ -24,113 +24,114 @@ function initMap() {
     // create an array of markers based on a given "locations" array.
     // The map() method here has nothing to do with the Google Maps API.
     var marker = locations.map(function(location, i) {
+        console.log(location);
+        console.log(i);
       return new google.maps.Marker({
         position: location,
-        label: labels[i % labels.length]
+        label: labels[(i+1) % labels.length],
+        animation: google.maps.Animation.BOUNCE
       });
     });
+    
+    // Add a marker clusterer to manage the markers.
+    var markerCluster = new MarkerClusterer(map, marker,
+    {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+}
 
     // Map events
-    var data;
-    map.addListener('click', function(event) {
-        data.lat = event.latLng.lat();
-        data.lng = event.latLng.lng();
-        console.log("Longitude: "+ data.lng);
-        console.log("Latitidue: "+ data.lat);
-      });
+    // var data;
+    // map.addListener('click', function(event) {
+    //     data.lat = event.latLng.lat();
+    //     data.lng = event.latLng.lng();
+    //     console.log("Longitude: "+ data.lng);
+    //     console.log("Latitidue: "+ data.lat);
+    //   });
 
-    google.maps.event.addListener(map, 'click', function(event) {
-        console.log("map click");
-        placeMarker(map, event.latLng);
-        });
+    // google.maps.event.addListener(map, 'click', function(event) {
+    //     console.log("map click");
+    //     placeMarker(map, event.latLng);
+    //     });
 
-    var infowindow = new google.maps.InfoWindow({
-        content:"Hello World!"
-    });
+    // var infowindow = new google.maps.InfoWindow({
+    //     content:"Hello World!"
+    // });
     
     // console.log(marker[0].getPosition());
 
-    // Add a marker clusterer to manage the markers.
-    // var markerCluster = new MarkerClusterer(map, marker,
-    //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-  }
+//   function placeMarker(map, location) {
+//     // var marker = new google.maps.Marker({
+//     //   position: location,
+//     //   map: map
+//     // });
+//     var infowindow = new google.maps.InfoWindow({
+//       content: 'Latitude: ' + location.lat() +
+//       '<br>Longitude: ' + location.lng()
+//     });
+//     infowindow.open(map,marker);
+//   } 
 
-  function placeMarker(map, location) {
-    // var marker = new google.maps.Marker({
-    //   position: location,
-    //   map: map
-    // });
-    var infowindow = new google.maps.InfoWindow({
-      content: 'Latitude: ' + location.lat() +
-      '<br>Longitude: ' + location.lng()
-    });
-    infowindow.open(map,marker);
-  } 
+// // Import from database all the names of the trucks and put them into namesarray
+// //function import(db)
+// //returns namesarray
 
-// Import from database all the names of the trucks and put them into namesarray
-//function import(db)
-//returns namesarray
-
-var namesarray = [];
-// The submit button grabs the user input and converts it into coordinates
-$("#submit").on("click", function(event) {
-    event.preventDefault();
+// var namesarray = [];
+// // The submit button grabs the user input and converts it into coordinates
+// $("#submit").on("click", function(event) {
+//     event.preventDefault();
     
-    var location = $("#location-input").val().trim();
-    var geocodeQuery = "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + googlemapskey;
+//     var location = $("#location-input").val().trim();
+//     var geocodeQuery = "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + googlemapskey;
 
-    var repeat = repeatCheck(namesarray,location);
-    if (location == ""){
-        console.log("no Input");
-    } else if (repeat === true){
-        console.log("name repeat");
-    } else {
-        mapQuery(adrr);
-        //add marker here
-    }
+//     var repeat = repeatCheck(namesarray,location);
+//     if (location == ""){
+//         console.log("no Input");
+//     } else if (repeat === true){
+//         console.log("name repeat");
+//     } else {
+//         mapQuery(adrr);
+//         //add marker here
+//     }
 
-});  
+// });  
 
-function repeatCheck(array, location){
-    var repeat = false;
-    for (k=0; k<array.length; k++){
-        if (array[k] == location){
-            repeat = true;
-            break;
-        } else {
-            console.log("not a repeat");
-        }
-    }
-    return repeat;
-}
+// function repeatCheck(array, location){
+//     var repeat = false;
+//     for (k=0; k<array.length; k++){
+//         if (array[k] == location){
+//             repeat = true;
+//             break;
+//         } else {
+//             console.log("not a repeat");
+//         }
+//     }
+//     return repeat;
+// }
 
-// Grabs id into coordinates and saves to database
-  var truckLocations = [];
-  function mapQuery(addr) {
-    var mapquery = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=" + googlemapskey;
-    $.ajax({
-        url: mapquery,
-        method: "GET",
-    }).then(function (response) {
-        //Google maps api takes input -> lat, lng, address
-        var latit = response.results[0].geometry.location.lat;
-        var longi = response.results[0].geometry.location.lng;
-        var add = response.results[0].formatted_address;
-        var coordinates = {lat: latit, lng: longi};
+// // Grabs id into coordinates and saves to database
+//   var truckLocations = [];
+//   function mapQuery(addr) {
+//     var mapquery = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=" + googlemapskey;
+//     $.ajax({
+//         url: mapquery,
+//         method: "GET",
+//     }).then(function (response) {
+//         //Google maps api takes input -> lat, lng, address
+//         var latit = response.results[0].geometry.location.lat;
+//         var longi = response.results[0].geometry.location.lng;
+//         var add = response.results[0].formatted_address;
+//         var coordinates = {lat: latit, lng: longi};
 
-        //create a local truckLocations array with coordinates saved
-        var coord = JSON.stringify(coordinates);
-        truckLocations[id] = coordinates;
+//         //create a local truckLocations array with coordinates saved
+//         var coord = JSON.stringify(coordinates);
+//         truckLocations[id] = coordinates;
 
-        // Save coordinates to truck
-        // database.ref(trucks[id].set({
-        //     location: coordinates,
-        //     timeupdated automatically updated
-        // });
-    });
-}
-
-initMap();
+//         // Save coordinates to truck
+//         // database.ref(trucks[id].set({
+//         //     location: coordinates,
+//         //     timeupdated automatically updated
+//         // });
+//     });
+// }
 
 
 
