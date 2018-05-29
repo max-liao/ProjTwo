@@ -1,18 +1,17 @@
 
 USE project2_db;
-
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (1,'The Funnel Fairy','Funnel Cakes','Desserts/Treats','678-541-5555');
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (2,'Doggone Truck','Hot Dogs, Corn Dogs, where everything is barking!','American','678-541-5556');
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (3,'The Taco Truck','Tacos & Tequilla','Mexican','678-541-5557');
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (4,'Flatbreads','Specialty Flatbreads and Pizza','Italian','678-541-5558');
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (5,'Holy Shrimp!','Shrimp in dozens of varieties','Seafood','678-541-5559');
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (6,'Chick a Stick','Chicken and Waffles on a Stick','American','678-541-5560');
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (7,'Sushi Truck','We have a truck full of Sushi','Sushi','678-541-5561');
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (8,'Take-A-Cake','Cake Slices on the go','Desserts/Treats','678-541-5562');
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (9,'Burger Bus','Beef, Turkey or Tofu... we got you','American','678-541-5563');
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (10,'Truckpotle','Burritos, Burrito Bow, you know','Mexican','678-541-5564');
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (11,'Meatball Madness','Meatballs on a stick','Italian','678-541-5565');
-INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`contact`) VALUES (12,'Truck Lobster','We serve delicious lobster, from a truck.','Seafood','678-541-5566');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (1,'The Funnel Fairy','Funnel Cakes','Desserts/Treats','','678-541-5555','2018-05-29 18:42:20');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (2,'Doggone Truck','Hot Dogs, Corn Dogs, where everything is barking!','American','','678-541-5556','2018-05-29 18:42:20');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (3,'The Taco Truck','Tacos & Tequilla','Mexican','','678-541-5557','2018-05-29 18:42:20');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (4,'Flatbreads','Specialty Flatbreads and Pizza','Italian','','678-541-5558','2018-05-29 18:42:20');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (5,'Holy Shrimp!','Shrimp in dozens of varieties','Seafood','','678-541-5559','2018-05-29 18:42:20');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (6,'Chick a Stick','Chicken and Waffles on a Stick','American','','678-541-5560','2018-05-29 18:42:20');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (7,'Sushi Truck','We have a truck full of Sushi','Sushi','','678-541-5561','2018-05-29 18:42:20');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (8,'Take-A-Cake','Cake Slices on the go','Desserts/Treats','','678-541-5562','2018-05-29 18:42:20');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (9,'Burger Bus','Beef, Turkey or Tofu... we got you','American','','678-541-5563','2018-05-29 18:42:20');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (10,'Truckpotle','Burritos, Burrito Bow, you know','Mexican','','678-541-5564','2018-05-29 18:42:20');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (11,'Meatball Madness','Meatballs on a stick','Italian','','678-541-5565','2018-05-29 18:42:20');
+INSERT INTO `food_truck` (`id`,`foodtruck_name`,`descr`,`cuisine`,`location`,`contact`,`date`) VALUES (12,'Truck Lobster','We serve delicious lobster, from a truck.','Seafood','','678-541-5566','2018-05-29 18:42:20');
 
 
 INSERT INTO `truck_menu` (`id`,`truck_id`,`menu_item`,`menu_description`,`price`) VALUES (1,1,'Classic Funnel Cake','Classic Funnel Cake with Powdered Sugar',3.50);
