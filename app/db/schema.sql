@@ -9,6 +9,7 @@ CREATE TABLE food_truck
     descr VARCHAR(250),
     cuisine VARCHAR(100),
     location VARCHAR(300) NOT NULL,
+	date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     contact VARCHAR(50),
 	PRIMARY KEY (id)
 );
