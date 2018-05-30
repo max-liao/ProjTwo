@@ -13,6 +13,7 @@ var model = require("../models/model.js");
 router.get("/", function(req, res) {
   model.selectall(function(data) {
     res.render("index", {model:data});
+    console.log(data);
   });
 });
 
