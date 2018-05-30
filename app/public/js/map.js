@@ -1,3 +1,5 @@
+
+
 //Google Maps initialization
 var googlemapskey = "AIzaSyACZMGscEwWMY3TJblK-NuIwhIRsoEaAnI";
 
@@ -50,22 +52,21 @@ function initMap() {
         // console.log("Latitidue: "+ data.lat);
     });
 
-
-    var infowindow = new google.maps.InfoWindow({
-        content:"Hello World!"
-    });
-    infowindow.open(map, marker[0]);
-
     for (i=0; i<marker.length; i++){
         markerclick(map, marker[i]);
     }
 }
 
-function markerclick (map, marker){
+function markerclick (map, marker, truckinfo){
     google.maps.event.addListener(marker,'click',function() {
         console.log(marker);
+        console.log(truckinfo);
         map.setZoom(15);
         map.setCenter(marker.getPosition());
+        var infowindow = new google.maps.InfoWindow({
+            content:"Hello World!"//truckinfo
+        });
+        infowindow.open(map, marker);
         });
 }
 

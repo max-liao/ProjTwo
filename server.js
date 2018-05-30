@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 
-var routes = require("./controllers/controller.js");
+var routes = require("./app/controllers/controller.js");
 
 app.use(routes);
 
