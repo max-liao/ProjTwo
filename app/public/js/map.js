@@ -60,7 +60,7 @@ function initMap() {
 function markerclick (map, marker, truckinfo){
     google.maps.event.addListener(marker,'click',function() {
         console.log(marker);
-        console.log(truckinfo);
+        // console.log(truckinfo);
         map.setZoom(15);
         map.setCenter(marker.getPosition());
         var infowindow = new google.maps.InfoWindow({
