@@ -1,7 +1,5 @@
 // Dependencies
 // =============================================================
-
-// Sequelize (capital) references the standard library
 var express = require("express");
 
 var router = express.Router();
@@ -13,24 +11,40 @@ var path = require("path");
 // Routes
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "../map.html"));
-  //model.selectall(function(data) {
-    //res.render("index", {model:data});
-    //console.log(data);
-    //console.log(__dirname );
-  //});
-  
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
-router.get("/userinput", function(req, res) {
-  res.sendFile(path.join(__dirname, "../public/userInput.html"));
-  //model.selectall(function(data) {
-    //res.render("index", {model:data});
-    //console.log(data);
-    //console.log(__dirname );
-  //});
-  
+// Map trucks
+router.get("/map", function(req, res) {
+  res.sendFile(path.join(__dirname, "../public/map.html"));
 });
+
+// Add/Update trucks
+router.get("/input", function(req, res) {
+  res.sendFile(path.join(__dirname, "../public/input.html"));
+});
+
+// Shows all trucks data
+router.get("/data", function(req, res) {
+    model.selectall(function(data) {
+    res.json({model:data});
+    console.log(data);
+  });
+});
+
+// <<<<<<< thomas
+// router.get("/userinput", function(req, res) {
+//   res.sendFile(path.join(__dirname, "../public/userInput.html"));
+//   //model.selectall(function(data) {
+//     //res.render("index", {model:data});
+//     //console.log(data);
+//     //console.log(__dirname );
+//   //});
+  
+// });
+// =======
+// // 
+// >>>>>>> Max
 router.get("/locations", function(req, res) {
   model.selectlocations(function(data) {
 
@@ -45,6 +59,7 @@ router.get("/locations", function(req, res) {
 
 })
 
+//New row
 router.post("/api/model", function(req, res) {
   model.createone(req.body.keys, req.body.values, function(result) {
     // Send back the ID of the new quote
@@ -54,6 +69,7 @@ router.post("/api/model", function(req, res) {
   });
 });
 
+//Update keys to values in row with id
 router.put("/api/model/:id", function(req, res) {
   model.updateone(req.params.keys, req.body.values, req.body.id, function(result) {
       if (result.changedRows === 0) {
