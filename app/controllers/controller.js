@@ -8,13 +8,33 @@ var router = express.Router();
 
 var model = require("../models/model.js");
 
+var path = require("path");
+
 // Routes
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
-  model.selectall(function(data) {
-    res.render("index", {model:data});
-  });
+  res.sendFile(path.join(__dirname, "../map.html"));
+  //model.selectall(function(data) {
+    //res.render("index", {model:data});
+    //console.log(data);
+    //console.log(__dirname );
+  //});
+  
 });
+
+router.get("/locations", function(req, res) {
+  model.selectlocations(function(data) {
+
+    // var places = [];
+    // for(var i = 0; i < data.length; i++){
+    //   places[i] = data[i].location;
+    // }
+    //console.log(data[0].location);
+    res.json(data);
+    //console.log(places);
+  });
+
+})
 
 router.post("/api/model", function(req, res) {
   model.createone(req.body.keys, req.body.values, function(result) {

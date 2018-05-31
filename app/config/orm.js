@@ -8,7 +8,6 @@ var connection = require("./connection.js");
 // https://en.wikipedia.org/wiki/SQL_injection
 var orm = {
   selectAll: function(table, cb) {
-    // console.log(table);
     var queryString = "SELECT * FROM " + table + ";";
     connection.query(queryString, function(err, result) {
       if (err) throw err;
@@ -16,7 +15,13 @@ var orm = {
       cb(result);
     });
   },
-
+  selectAlllocations: function(table, cb) {
+    var queryString = "SELECT location FROM " + table + ";";
+    connection.query(queryString, function(err, result) {
+      if (err) throw err;
+      cb(result);
+    });
+  },
   createOne: function(table, keys, values, cb) {
     var queryString = "INSERT INTO " + table + " (" + keys + ") VALUES ("+ values +")";
     connection.query(queryString, function(err, result) {
@@ -37,5 +42,6 @@ var orm = {
     });
   }
 };
+
 
 module.exports = orm;
