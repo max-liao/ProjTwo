@@ -9,7 +9,11 @@ var model = {
       cb(res);
     });
   },
-  
+  selectlocations: function(cb) {
+    orm.selectAlllocations("food_truck", function(res) {
+      cb(res);
+    });
+  },
   createone: function(keys, values, cb) {
     orm.createOne("food_truck", keys, values, function(res) {
       cb(res);

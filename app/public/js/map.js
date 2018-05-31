@@ -16,6 +16,25 @@ var uluru = {lat: -25.344, lng: 131.036};
 //Locations contains marker coordinates
 var locations = [atlanta, uluru];
 
+
+//POPULATE LOCATIONS FROM SQL DB
+
+// $.ajax("/locations", {
+//     type: "GET",
+//     //data: newLocatrion
+//   }).then(
+//     function(data) {
+
+//     for(var i = 0; i < data.length; i++){
+//       locations[i] = data[i].location;
+//     }
+
+//       console.log("data from ajax locations:" + locations);
+//       // Reload the page to get the updated list
+//       //location.reload();
+//     }
+//   );
+
 //Display Maps
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -43,13 +62,14 @@ function initMap() {
     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
 // Map events
-    var data;
     map.addListener('click', function(event) {
+        var data = {};
         console.log(event);
-        // data.lat = event.latLng.lat();
-        // data.lng = event.latLng.lng();
-        // console.log("Longitude: "+ data.lng);
-        // console.log("Latitidue: "+ data.lat);
+        data.lat = event.latLng.lat();
+        data.lng = event.latLng.lng();
+        console.log("Longitude: "+ data.lng);
+        console.log("Latitidue: "+ data.lat);
+        placeMarker(map, data);
     });
 
     for (i=0; i<marker.length; i++){
@@ -57,12 +77,26 @@ function initMap() {
     }
 }
 
+function placeMarker(map, location) {
+    var marker = new google.maps.Marker({
+    position: location,
+    map: map
+    });
+    var infowindow = new google.maps.InfoWindow({
+        content: 'Latitude: ' + location.lat +
+        '<br>Longitude: ' + location.lng
+    });
+    infowindow.open(map,marker);
+} 
+
+
 function markerclick (map, marker, truckinfo){
     google.maps.event.addListener(marker,'click',function() {
         console.log(marker);
         // console.log(truckinfo);
         map.setZoom(15);
         map.setCenter(marker.getPosition());
+        // console.log(marker.getPosition());
         var infowindow = new google.maps.InfoWindow({
             content:"Hello World!"//truckinfo
         });
@@ -71,8 +105,8 @@ function markerclick (map, marker, truckinfo){
 }
 
 // Grabs coordinates and saves to database
-  var truckLocations = [];
-  function mapQuery(addr) {
+var truckLocations = [];
+function mapQuery(addr) {
     var mapquery = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=" + googlemapskey;
     $.ajax({
         url: mapquery,
@@ -100,13 +134,29 @@ function markerclick (map, marker, truckinfo){
 }
 
 
+
 // var values = mapQuery("Buckingham palace");
 
+// var namesarray = [];
 // // Import from database all the names of the trucks and put them into namesarray
 // //function import(db)
 // //returns namesarray
 
-// var namesarray = [];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // // The submit button grabs the user input and converts it into coordinates
 // $("#submit").on("click", function(event) {
 //     event.preventDefault();
@@ -126,64 +176,6 @@ function markerclick (map, marker, truckinfo){
 
 // });  
 
-
-
-
-
-
-
-
-
-
-
-    
-
-    // google.maps.event.addListener(map, 'click', function(event) {
-    //     console.log("map click");
-    //     placeMarker(map, event.latLng);
-    //     });
-
-    // console.log(marker[0].getPosition());
-
-//   function placeMarker(map, location) {
-//     // var marker = new google.maps.Marker({
-//     //   position: location,
-//     //   map: map
-//     // });
-//     var infowindow = new google.maps.InfoWindow({
-//       content: 'Latitude: ' + location.lat() +
-//       '<br>Longitude: ' + location.lng()
-//     });
-//     infowindow.open(map,marker);
-//   } 
-
-// function repeatCheck(array, location){
-//     var repeat = false;
-//     for (k=0; k<array.length; k++){
-//         if (array[k] == location){
-//             repeat = true;
-//             break;
-//         } else {
-//             console.log("not a repeat");
-//         }
-//     }
-//     return repeat;
-// }
-
-
-
-
-
-
-
-
-
-// function ArrtoObject(arr) {
-//     var rv = {};
-//     for (var i = 0; i < arr.length; ++i)
-//       if (arr[i] !== undefined) rv[i] = arr[i];
-//     return rv;
-//   }
 
 // function showbrews(city) {
 //     // console.log(breweryInfo.breweryLocation.length);
