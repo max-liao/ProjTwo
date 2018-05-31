@@ -1,7 +1,5 @@
 // Dependencies
 // =============================================================
-
-// Sequelize (capital) references the standard library
 var express = require("express");
 
 var router = express.Router();
