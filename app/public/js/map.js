@@ -16,7 +16,6 @@ var locations = [];
 
 $.ajax("/locations", {
     type: "GET",
-    //data: newBurger
   }).then(
     function(data) {
 
@@ -24,7 +23,7 @@ $.ajax("/locations", {
       locations[i] = data[i].location;
     }
 
-      console.log("data from ajax locations:" + locations);
+      console.log("Test data from ajax locations:" + locations);
       // Reload the page to get the updated list
       //location.reload();
     }
