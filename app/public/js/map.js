@@ -22,8 +22,11 @@ $.ajax("/locations", {
     for(var i = 0; i < data.length; i++){
       locations[i] = data[i].location;
     }
+    for(var i = 0; i < locations.length; i++){
 
-      console.log("Test data from ajax locations:" + locations);
+         console.log(locations[i]);
+    }
+     
       // Reload the page to get the updated list
       //location.reload();
     }
