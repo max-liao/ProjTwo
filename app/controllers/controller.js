@@ -11,15 +11,24 @@ var path = require("path");
 // Routes
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "../public/map.html"));
-  // console.log(path.join(__dirname, "../public/map.html"));
-  //model.selectall(function(data) {
-    //res.render("index", {model:data});
-    //console.log(data);
-    //console.log(__dirname );
-  //});
-  
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
+
+router.get("/map", function(req, res) {
+  res.sendFile(path.join(__dirname, "../public/map.html"));
+});
+
+router.get("/input", function(req, res) {
+  res.sendFile(path.join(__dirname, "../public/input.html"));
+});
+
+router.get("/data", function(req, res) {
+    model.selectall(function(data) {
+    res.json({model:data});
+    console.log(data);
+  });
+});
+
 
 router.get("/locations", function(req, res) {
   model.selectlocations(function(data) {
