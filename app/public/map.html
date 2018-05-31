@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Max Liao">
+
+    <title>Project Two Map</title>
+    
+    <!-- <style>
+      /* Set the size of the div element that contains the map */
+     #map {
+       height: 400px;  /* The height is 400 pixels */
+       width: 100%;  /* The width is the width of the web page */
+      }
+   </style> -->
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- Local CSS -->
+  <!-- <link rel="stylesheet" href="css/reset.css"> -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Google maps markerclusterer -->
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+
+  <!-- Initialize Google Maps -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6b6PThKZfWpNBOo_s6f1caBl9iB2PG4E&callback=initMap"></script>
+
+  </head>
+
+  <body>
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h1 class="masthead-brand">Food Truck Finder</h1>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="input.html">User Input</a></li>
+                  <li class="active"><a href="map.html">Map</a></li>
+                  
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <!-- Food Truck Info -->
+          <div>
+            <div class="jumbotron" id="Mapjumbo">
+              <h1 class="text-center">Food Truck Info!</h1>
+            </div>
+          </div>
+
+          <h3>Food Truck Map</h3>
+          <!--The div element for the map -->
+          <div id="map"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script -->
+    <script type="text/javascript" src="js/map.js"></script>
+  </body>
+</html>
