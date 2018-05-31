@@ -14,14 +14,17 @@ router.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
+// Map trucks
 router.get("/map", function(req, res) {
   res.sendFile(path.join(__dirname, "../public/map.html"));
 });
 
+// Add/Update trucks
 router.get("/input", function(req, res) {
   res.sendFile(path.join(__dirname, "../public/input.html"));
 });
 
+// Shows all trucks data
 router.get("/data", function(req, res) {
     model.selectall(function(data) {
     res.json({model:data});
@@ -29,7 +32,7 @@ router.get("/data", function(req, res) {
   });
 });
 
-
+// 
 router.get("/locations", function(req, res) {
   model.selectlocations(function(data) {
 
@@ -44,6 +47,7 @@ router.get("/locations", function(req, res) {
 
 })
 
+//New row
 router.post("/api/model", function(req, res) {
   model.createone(req.body.keys, req.body.values, function(result) {
     // Send back the ID of the new quote
@@ -52,6 +56,7 @@ router.post("/api/model", function(req, res) {
   });
 });
 
+//Update keys to values in row with id
 router.put("/api/model/:id", function(req, res) {
   model.updateone(req.params.keys, req.body.values, req.body.id, function(result) {
       if (result.changedRows === 0) {
