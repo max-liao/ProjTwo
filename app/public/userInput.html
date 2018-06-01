@@ -10,6 +10,8 @@
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
 </head>
 <body>
 
@@ -28,9 +30,9 @@
     </div> -->
 
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-6">
 
-        <!-- Reservation Page -->
+        <!-- New Truck Page -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">New Truck</h4>
@@ -66,7 +68,7 @@
 
               <div class="form-group">
                 <label for="truck-date">Date</label>
-                <input type="text" class="form-control" id="truck-date">
+                <input type="date" class="form-control" id="truck-date" size="20">
               </div>
 
               <button type="submit" class="btn btn-primary submit">Add Truck</button>
@@ -76,6 +78,54 @@
         </div>
 
       </div>
+      <!-- <div class="col-lg-6">
+
+        New Truck Page
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">Update Truck</h4>
+          </div>
+          <div class="panel-body">
+
+            <form role="form">
+
+              <div class="form-group">
+                <label for="truck-name">Truck Name</label>
+                <input type="text" class="form-control" id="truck-name">
+              </div>
+              
+              <div class="form-group">
+                <label for="truck-description">Description</label>
+                <input type="text" class="form-control" id="truck-description">
+              </div>
+
+              <div class="form-group">
+                <label for="truck-cuisine">Cuisine</label>
+                <input type="text" class="form-control" id="truck-cuisine">
+              </div>
+
+              <div class="form-group">
+                <label for="truck-location">Location</label>
+                <input type="text" class="form-control" id="truck-location">
+              </div>
+
+              <div class="form-group">
+                <label for="truck-phone">Phone Number</label>
+                <input type="text" class="form-control" id="truck-phone">
+              </div>
+
+              <div class="form-group">
+                <label for="truck-date">Date (YYYY-MM-DD)</label>
+                <input type="text" class="form-control" id="truck-date" size="20">
+              </div>
+
+              <!-- <button type="submit" class="btn btn-primary submit">Update Truck</button> -->
+            </form>
+
+          </div>
+        </div>
+
+      </div> -->
     </div>
 
 
@@ -93,9 +143,33 @@
 <!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
 <script type="text/javascript">
 
+    function validateForm() {
+      var isValid = true;
+        $(".form-control").each(function() {
+          if ($(this).val() === "") {
+            isValid = false;
+          }
+        });
+        return isValid;
+      }
+    $.ajax("/data", {
+    type: "GET",
+     }).then(
+    function(data) {
+
+      //var trucks = [atlanta, uluru];
+      console.log("Test data from ajax trucks:" + data[0].foodtruck_name);
+      // Reload the page to get the updated list
+      //location.reload();
+    }
+  );
+
     $(".submit").on("click", function(event) {
       event.preventDefault();
 
+      var formattedDate = $("#truck-date").val().trim();
+      formattedDate = moment(formattedDate).format();
+      if(validateForm()){
       // Here we grab the form elements
       var newTruck = {
         foodtruck_name: $("#truck-name").val().trim(),
@@ -103,25 +177,20 @@
         descr: $("#truck-description").val().trim(),
         cuisine: $("#truck-cuisine").val().trim(),
         location: $("#truck-location").val().trim(),
-        date: $("#truck-date").val().trim()
+        date: formattedDate
       };
 
       console.log(newTruck);
-
-
       $.post("/api/model", newTruck,
         function(data) {
 
           // If a table is available... tell user they are booked.
           if (data) {
-            alert("Truck added!");
+            alert("Congratulations, your truck added!");
           }
-
-  
           else {
-            alert("Sorry truck not added");
+            alert("Sorry, the truck was not added");
           }
-
           // Clear the form when submitting
          $("#truck-name").val('');
          $("#truck-phone").val('');
@@ -131,7 +200,10 @@
          $("#truck-date").val('')
  
         });
-
+    }else {
+        alert("Please fill out all fields before submitting!");
+        
+      }
     });
 
 </script>

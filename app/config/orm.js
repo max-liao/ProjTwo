@@ -25,7 +25,13 @@ var orm = {
 
   //Add row to table
   createOne: function(table, keys, values, cb) {
-    var queryString = "INSERT INTO " + table + " (" + keys + ") VALUES ("+ values +")";
+
+    for(var a = 0; a<values.length; a++){
+      values[a] = "'" + values[a] + "'";
+    }
+
+    var queryString = "INSERT INTO " + table + " (" + keys + ") VALUES ("+ values +");";
+    console.log(queryString);
     connection.query(queryString, function(err, result) {
       if (err) throw err;
       console.log(result);
@@ -34,7 +40,7 @@ var orm = {
   },
   //Update value in row
   updateOne: function(table, keys, values, id, cb) {
-    var queryString = "UPDATE "+ table +" SET (" + keys + ") = (" + values + ")";
+    var queryString = "UPDATE "+ table +" SET (" + keys + ") = (" + values + ");";
     queryString += " WHERE id= ";
     queryString += id;
 
