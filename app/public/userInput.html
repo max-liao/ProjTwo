@@ -23,12 +23,6 @@
       <h2 class="text-center">Add or Update Food Truck</h2>
       <br>
 
-      <!-- <div class="text-center">
-        <a href="/tables"><button class="btn btn-lg btn-primary"><span class="fa fa-list-alt"></span> View Tables</button></a>
-        <a href="/"><button class="btn btn-lg btn-default"><span class="fa fa-home"></span></button></a>
-      </div>
-    </div> -->
-
     <div class="row">
       <div class="col-lg-6">
 
@@ -63,7 +57,7 @@
 
               <div class="form-group">
                 <label for="truck-phone">Phone Number</label>
-                <input type="text" class="form-control" id="truck-phone">
+                <input type="tel" class="form-control" id="truck-phone">
               </div>
 
               <div class="form-group">
@@ -78,9 +72,8 @@
         </div>
 
       </div>
-      <!-- <div class="col-lg-6">
+      <div class="col-lg-6">
 
-        New Truck Page
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">Update Truck</h4>
@@ -91,9 +84,11 @@
 
               <div class="form-group">
                 <label for="truck-name">Truck Name</label>
-                <input type="text" class="form-control" id="truck-name">
+                  <select class="chosen-select" id="foodtruck_name">
+                  <option value="">Select a Food Truck</option>
+                </select>
               </div>
-              
+             
               <div class="form-group">
                 <label for="truck-description">Description</label>
                 <input type="text" class="form-control" id="truck-description">
@@ -115,34 +110,25 @@
               </div>
 
               <div class="form-group">
-                <label for="truck-date">Date (YYYY-MM-DD)</label>
-                <input type="text" class="form-control" id="truck-date" size="20">
+                <label for="truck-date">Date</label>
+                <input type="date" class="form-control" id="truck-date" size="20">
               </div>
 
-              <!-- <button type="submit" class="btn btn-primary submit">Update Truck</button> -->
+              <button type="submit" class="btn btn-primary update">Update Truck</button>
             </form>
 
           </div>
         </div>
 
-      </div> -->
-    </div>
-
-
-    <!-- <footer class="footer">
-      <div class="container">
-        <p><a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a> | <a href="https://github.com/afhaque/HotRestaurant">GitHub Repo</a></p>
       </div>
-    </footer> -->
-
+    </div>
   </div>
 
 </body>
 </html>
 
-<!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
 <script type="text/javascript">
-
+//function to validate form data, ensure no fields are blank
     function validateForm() {
       var isValid = true;
         $(".form-control").each(function() {
@@ -152,25 +138,34 @@
         });
         return isValid;
       }
+//this call will pull the id and names of the foodtruck to populate the dropdown
     $.ajax("/data", {
     type: "GET",
      }).then(
     function(data) {
+      var trucks =[];
+      var id = [];
+      for (var i = 0; i<data.length; i++){
+        id[i] = data[i].id;
+        trucks[i] = data[i].foodtruck_name;
 
-      //var trucks = [atlanta, uluru];
-      console.log("Test data from ajax trucks:" + data[0].foodtruck_name);
-      // Reload the page to get the updated list
-      //location.reload();
+        var newoption = '<option value='+ '"'+ id[i] + '"' + '>' + trucks[i] + '</option>';
+
+        $('#foodtruck_name').append(newoption);
+        //console.log(newoption);
+      }
+      //console.log(trucks);
     }
   );
 
+//when the submit is clicked to add a new food truck, validate the form and send the data
     $(".submit").on("click", function(event) {
       event.preventDefault();
 
       var formattedDate = $("#truck-date").val().trim();
       formattedDate = moment(formattedDate).format();
       if(validateForm()){
-      // Here we grab the form elements
+      // Here we grab the form elements and remove blank spaces
       var newTruck = {
         foodtruck_name: $("#truck-name").val().trim(),
         contact: $("#truck-phone").val().trim(),
@@ -184,9 +179,9 @@
       $.post("/api/model", newTruck,
         function(data) {
 
-          // If a table is available... tell user they are booked.
+          // If a truck is added, send alert.
           if (data) {
-            alert("Congratulations, your truck added!");
+            alert("Congratulations, your truck was added!");
           }
           else {
             alert("Sorry, the truck was not added");
