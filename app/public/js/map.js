@@ -1,5 +1,3 @@
-
-
 //Google Maps initialization
 var googlemapskey = "AIzaSyACZMGscEwWMY3TJblK-NuIwhIRsoEaAnI";
 
@@ -14,48 +12,67 @@ var atlanta = {lat: 33.748995, lng: -84.387982};
 var uluru = {lat: -25.344, lng: 131.036};
 
 //Locations contains marker coordinates
-var locations = [atlanta, uluru];
-
+// var locations2 = [atlanta, uluru];
+var locations = [];
+// var locations2 = [];
+// var addresses = [];
 
 //POPULATE LOCATIONS FROM SQL DB
+async function init(){
+    await $.ajax("/locations", {
+        type: "GET",
+        //data: newLocatrion
+    }).then(
+        function(data) {
+            var locations2 = [];
+            // console.log("test");
+            for(var i = 0; i < data.length; i++){
+               locations2[i] = mapQuery(data[i].location, i);
+            }
+            // console.log(locations);
+            console.log(locations2);
+            
+            
+            // Reload the page to get the updated list
+            //location.reload();
+        }
+    );
+    // initMap(locations);
+}
 
-// $.ajax("/locations", {
-//     type: "GET",
-//     //data: newLocatrion
-//   }).then(
-//     function(data) {
-
-//     for(var i = 0; i < data.length; i++){
-//       locations[i] = data[i].location;
-//     }
-
-//       console.log("data from ajax locations:" + locations);
-//       // Reload the page to get the updated list
-//       //location.reload();
-//     }
-//   );
 
 //Display Maps
-function initMap() {
+async function initMap() {
+    await init();
+    console.log(locations);
+    console.log(locations[0]);
+    console.log(locations.length);
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 7,
       center: atlanta
     });
 
+    // var marker = new google.maps.Marker({
+    //     position: locations[0],
+    //     map: map,
+    //     title: 'Hello World!'
+    //   });
+
     // Add some markers to the map.
     // Note: The code uses the JavaScript Array.prototype.map() method to
     // create an array of markers based on a given "locations" array.
-    // The map() method here has nothing to do with the Google Maps API.
-    var marker = locations.map(function(location, i) {
-        console.log(location);
+    // The map() method here has nothing to do with the Google Maps API.{
+    var marker = locations.map(function(data, i) {
+        console.log(data);
         console.log(i);
       return new google.maps.Marker({
-        position: location,
+        position: data,
         label: labels[i % labels.length],
         // animation: google.maps.Animation.BOUNCE,
 //         // icon:"./images/food-truck.png"        
       });
     });
+    
     
     // Add a marker clusterer to manage the markers.
     var markerCluster = new MarkerClusterer(map, marker,
@@ -69,7 +86,7 @@ function initMap() {
         data.lng = event.latLng.lng();
         console.log("Longitude: "+ data.lng);
         console.log("Latitidue: "+ data.lat);
-        placeMarker(map, data);
+        // placeMarker(map, data);
     });
 
     for (i=0; i<marker.length; i++){
@@ -106,9 +123,10 @@ function markerclick (map, marker, truckinfo){
 
 // Grabs coordinates and saves to database
 var truckLocations = [];
-function mapQuery(addr) {
+async function mapQuery(addr, i) {
+    var test;
     var mapquery = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=" + googlemapskey;
-    $.ajax({
+    await $.ajax({
         url: mapquery,
         method: "GET",
     }).then(function (response) {
@@ -118,9 +136,9 @@ function mapQuery(addr) {
         var add = response.results[0].formatted_address;
         var coordinates = {lat: latit, lng: longi};
 
-        console.log(coordinates);
-        return coordinates;
-
+        // console.log(coordinates);
+        locations[i] = coordinates;
+        
         //create a local truckLocations array with coordinates saved
         var coord = JSON.stringify(coordinates);
         
@@ -176,7 +194,7 @@ function mapQuery(addr) {
 
 // });  
 
-
+``
 // function showbrews(city) {
 //     // console.log(breweryInfo.breweryLocation.length);
 //     brewsobj = breweryInfo.breweryLocation;
@@ -193,5 +211,6 @@ function mapQuery(addr) {
 //         return brewerylocs[key];
 //       });
 
-//     initMap();
-// }
+//     
+
+initMap();
