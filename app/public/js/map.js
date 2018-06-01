@@ -12,59 +12,57 @@ var atlanta = {lat: 33.748995, lng: -84.387982};
 var uluru = {lat: -25.344, lng: 131.036};
 
 //Locations contains marker coordinates
-// var locations2 = [atlanta, uluru];
+// var locations = [atlanta, uluru];
 var locations = [];
-// var locations2 = [];
-// var addresses = [];
 
 //POPULATE LOCATIONS FROM SQL DB
 async function init(){
-    await $.ajax("/locations", {
-        type: "GET",
-        //data: newLocatrion
+    var promise = await $.ajax("/locations", {
+        type: "GET"
     }).then(
         function(data) {
-            var locations2 = [];
+            var promises = [];
             // console.log("test");
             for(var i = 0; i < data.length; i++){
-               locations2[i] = mapQuery(data[i].location, i);
+               promises[i] = mapQuery(data[i].location, i);
             }
-            // console.log(locations);
-            console.log(locations2);
+            // console.log(promises);
             
-            
-            // Reload the page to get the updated list
-            //location.reload();
+            return new Promise(resolve => {
+                resolve(promises);
+            });
         }
     );
-    // initMap(locations);
+    return promise;
 }
-
 
 //Display Maps
 async function initMap() {
-    await init();
+    var test = await init();
+    var locations = [];
+    
+    for (i=0; i<test.length; i++){
+        await test[i].then(function(value){
+            // console.log(value);
+            locations.push(value);
+        });
+    }
     console.log(locations);
-    console.log(locations[0]);
+    // console.log(locations[0]);
     console.log(locations.length);
+
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 7,
       center: atlanta
     });
-
-    // var marker = new google.maps.Marker({
-    //     position: locations[0],
-    //     map: map,
-    //     title: 'Hello World!'
-    //   });
-
+    
     // Add some markers to the map.
     // Note: The code uses the JavaScript Array.prototype.map() method to
     // create an array of markers based on a given "locations" array.
     // The map() method here has nothing to do with the Google Maps API.{
     var marker = locations.map(function(data, i) {
-        console.log(data);
-        console.log(i);
+        // console.log(data);
+        // console.log(i);
       return new google.maps.Marker({
         position: data,
         label: labels[i % labels.length],
@@ -72,7 +70,6 @@ async function initMap() {
 //         // icon:"./images/food-truck.png"        
       });
     });
-    
     
     // Add a marker clusterer to manage the markers.
     var markerCluster = new MarkerClusterer(map, marker,
@@ -89,11 +86,14 @@ async function initMap() {
         // placeMarker(map, data);
     });
 
+
+    //Handles Marker Click events
     for (i=0; i<marker.length; i++){
         markerclick(map, marker[i]);
     }
 }
 
+//Places a new temporary marker
 function placeMarker(map, location) {
     var marker = new google.maps.Marker({
     position: location,
@@ -106,7 +106,7 @@ function placeMarker(map, location) {
     infowindow.open(map,marker);
 } 
 
-
+//Listener for marker clicks
 function markerclick (map, marker, truckinfo){
     google.maps.event.addListener(marker,'click',function() {
         console.log(marker);
@@ -122,11 +122,11 @@ function markerclick (map, marker, truckinfo){
 }
 
 // Grabs coordinates and saves to database
-var truckLocations = [];
+// var truckLocations = [];
 async function mapQuery(addr, i) {
     var test;
     var mapquery = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=" + googlemapskey;
-    await $.ajax({
+    var promise = await $.ajax({
         url: mapquery,
         method: "GET",
     }).then(function (response) {
@@ -148,29 +148,21 @@ async function mapQuery(addr, i) {
         //     location: coordinates,
         //     timeupdated automatically updated
         // });
+        return new Promise(resolve => {
+              resolve(coordinates);
+          });
     });
+    // console.log(promise);
+    return promise;
 }
 
 
-
-// var values = mapQuery("Buckingham palace");
+initMap();
 
 // var namesarray = [];
 // // Import from database all the names of the trucks and put them into namesarray
 // //function import(db)
 // //returns namesarray
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -193,24 +185,3 @@ async function mapQuery(addr, i) {
 //     }
 
 // });  
-
-``
-// function showbrews(city) {
-//     // console.log(breweryInfo.breweryLocation.length);
-//     brewsobj = breweryInfo.breweryLocation;
-//     console.log(brewsobj.length);
-    
-//     for (i=0;i<brewsobj.length;i++){
-//         // var breweryaddress = (breweryInfo.breweryLocation[i].address + " " + cities[i]);
-//         var breweryaddress = brewsobj[i].address +""+ city;
-//         brewQuery(brewsobj[i].name, breweryaddress , i);    
-//     }
-    
-//     locations = Object.keys(brewerylocs).map(function(key) {
-//         // return [Number(key), locationsobj[key]];
-//         return brewerylocs[key];
-//       });
-
-//     
-
-initMap();
