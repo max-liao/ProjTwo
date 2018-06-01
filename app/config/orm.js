@@ -22,6 +22,8 @@ var orm = {
       cb(result);
     });
   },
+
+  //Add row to table
   createOne: function(table, keys, values, cb) {
     var queryString = "INSERT INTO " + table + " (" + keys + ") VALUES ("+ values +")";
     connection.query(queryString, function(err, result) {
@@ -30,6 +32,7 @@ var orm = {
       cb(result);
     });
   },
+  //Update value in row
   updateOne: function(table, keys, values, id, cb) {
     var queryString = "UPDATE "+ table +" SET (" + keys + ") = (" + values + ")";
     queryString += " WHERE id= ";
