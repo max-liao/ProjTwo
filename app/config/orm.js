@@ -28,6 +28,7 @@ var orm = {
     var queryString = "INSERT INTO " + table + " (" + keys + ") VALUES ("+ values +")";
     connection.query(queryString, function(err, result) {
       if (err) throw err;
+      console.log.apply(queryString);
       console.log(result);
       cb(result);
     });

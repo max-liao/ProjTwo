@@ -50,9 +50,9 @@ router.get("/locations", function(req, res) {
 //New row
 router.post("/api/model", function(req, res) {
   model.createone(req.body.keys, req.body.values, function(result) {
-    // Send back the ID of the new quote
     // res.json({ id: result.insertId });
-    res.json({ id: result.id });
+    //res.json({ id: result.id });
+    console.log("result from createone" + result);
   });
 });
 

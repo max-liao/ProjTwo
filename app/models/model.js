@@ -15,8 +15,10 @@ var model = {
     });
   },
   createone: function(keys, values, cb) {
+    console.log(keys + '\n' + values)
     orm.createOne("food_truck", keys, values, function(res) {
       cb(res);
+      
     });
   },
   updateone: function(keys, values, id, cb) {

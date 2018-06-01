@@ -13,27 +13,57 @@ for (l = 1; l< 100; l++){
 var atlanta = {lat: 33.748995, lng: -84.387982};
 var uluru = {lat: -25.344, lng: 131.036};
 
-//Locations contains marker coordinates
-var locations = [atlanta, uluru];
+<<<<<<< HEAD
+    for(var i = 0; i < data.length; i++){
+      locations[i] = data[i].location;
+    }
+    for(var i = 0; i < locations.length; i++){
 
-
-//POPULATE LOCATIONS FROM SQL DB
-
+         console.log(locations[i]);
+    }
+     
+      // Reload the page to get the updated list
+      //location.reload();
+    }
+  );
+=======
+// <<<<<<< thomas
 // $.ajax("/locations", {
 //     type: "GET",
-//     //data: newLocatrion
 //   }).then(
 //     function(data) {
+// =======
+// //Locations contains marker coordinates
+// var locations = [atlanta, uluru];
+// >>>>>>> Max
 
-//     for(var i = 0; i < data.length; i++){
-//       locations[i] = data[i].location;
-//     }
 
-//       console.log("data from ajax locations:" + locations);
+// <<<<<<< thomas
+//       console.log("Test data from ajax locations:" + locations);
 //       // Reload the page to get the updated list
 //       //location.reload();
 //     }
 //   );
+// =======
+// //POPULATE LOCATIONS FROM SQL DB
+
+// // $.ajax("/locations", {
+// //     type: "GET",
+// //     //data: newLocatrion
+// //   }).then(
+// //     function(data) {
+
+// //     for(var i = 0; i < data.length; i++){
+// //       locations[i] = data[i].location;
+// //     }
+
+// //       console.log("data from ajax locations:" + locations);
+// //       // Reload the page to get the updated list
+// //       //location.reload();
+// //     }
+// //   );
+// >>>>>>> Max
+>>>>>>> 67ae15d3df38ef81632985a4843b7e58efd22fb7
 
 //Display Maps
 function initMap() {
