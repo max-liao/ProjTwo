@@ -8,6 +8,8 @@ var model = require("../models/model.js");
 
 var path = require("path");
 
+var bodyParser = require("body-parser");
+
 // Routes
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
@@ -21,14 +23,14 @@ router.get("/map", function(req, res) {
 
 // Add/Update trucks
 router.get("/input", function(req, res) {
-  res.sendFile(path.join(__dirname, "../public/input.html"));
+  res.sendFile(path.join(__dirname, "../public/userInput.html"));
 });
 
 // Shows all trucks data
 router.get("/data", function(req, res) {
     model.selectall(function(data) {
-    res.json({model:data});
-    console.log(data);
+    res.json(data);
+    //console.log(data);
   });
 });
 
@@ -45,11 +47,21 @@ router.get("/locations", function(req, res) {
     //console.log(places);
   });
 
-})
+});
 
 //New row
 router.post("/api/model", function(req, res) {
+<<<<<<< HEAD
   model.createone(req.body.keys, req.body.values, function(result) {
+=======
+
+  var keys = [ 'foodtruck_name', 'contact', 'descr', 'cuisine', 'location', 'date'];
+   var values = [req.body.foodtruck_name, req.body.contact, req.body.descr, req.body.cuisine, req.body.location, req.body.date];
+  console.log ('keys:' + keys);
+  console.log ('values :' + values);
+   model.createone(keys, values, function(result) {
+    // Send back the ID of the new quote
+>>>>>>> thomas
     // res.json({ id: result.insertId });
     //res.json({ id: result.id });
     console.log("result from createone" + result);
@@ -58,7 +70,10 @@ router.post("/api/model", function(req, res) {
 
 //Update keys to values in row with id
 router.put("/api/model/:id", function(req, res) {
-  model.updateone(req.params.keys, req.body.values, req.body.id, function(result) {
+  var keys = [ 'foodtruck_name', 'contact', 'descr', 'cuisine', 'location', 'date'];
+  var values = [req.body.foodtruck_name, req.body.contact, req.body.descr, req.body.cuisine, req.body.location, req.body.date];
+  
+  model.updateone(keys, values, req.body.id, function(result) {
       if (result.changedRows === 0) {
         // If no rows were changed, then the ID must not exist, so 404
         return res.status(404).end();
