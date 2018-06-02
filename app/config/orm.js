@@ -40,10 +40,16 @@ var orm = {
   },
   //Update value in row
   updateOne: function(table, keys, values, id, cb) {
-    var queryString = "UPDATE "+ table +" SET (" + keys + ") = (" + values + ");";
+    var tempstring;
+
+     for(i = 0; i< keys.length; i++){
+      tempstring += keys[i] + " =  '"+values[i] +"',"
+    }
+    var queryString = "UPDATE "+ table +" SET " + tempstring + ";";
     queryString += " WHERE id= ";
     queryString += id;
 
+  
     connection.query(queryString, function(err, result) {
       if (err) throw err;
       console.log(result);

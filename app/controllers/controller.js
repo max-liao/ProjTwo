@@ -80,17 +80,16 @@ router.post("/api/model", function(req, res) {
 router.put("/api/model/:id", function(req, res) {
   var keys = [ 'foodtruck_name', 'contact', 'descr', 'cuisine', 'location', 'date'];
   var values = [req.body.foodtruck_name, req.body.contact, req.body.descr, req.body.cuisine, req.body.location, req.body.date];
- console.log ('keys:' + keys);
- console.log ('values :' + values);
- console.log(req.body);
-  // model.updateone(keys, values, req.body.id, function(result) {
-  //     if (result.changedRows === 0) {
-  //       // If no rows were changed, then the ID must not exist, so 404
-  //       return res.status(404).end();
-  //     }
-  //     res.status(200).end();
-  //   }
-  // );
+//  console.log ('keys:' + keys);
+//  console.log ('values :' + values);
+  model.updateone(keys, values, req.body.id, function(result) {
+      if (result.changedRows === 0) {
+        // If no rows were changed, then the ID must not exist, so 404
+        return res.status(404).end();
+      }
+      res.status(200).end();
+    }
+  );
 });
 
 // Export routes for server.js to use.
