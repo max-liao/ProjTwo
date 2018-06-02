@@ -47,9 +47,9 @@ async function initMap() {
             locations.push(value);
         });
     }
-    console.log(locations);
+    // console.log(locations);
     // console.log(locations[0]);
-    console.log(locations.length);
+    // console.log(locations.length);
 
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
@@ -74,8 +74,9 @@ async function initMap() {
     // Add a marker clusterer to manage the markers.
     var markerCluster = new MarkerClusterer(map, marker,
     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'})
-    console.log(markerCluster);
+    
     var temp = markerCluster.clusters_;
+    console.log(markerCluster);
     console.log(temp);
     console.log(temp.length);
     
@@ -89,7 +90,6 @@ async function initMap() {
         console.log("Latitidue: "+ data.lat);
         // placeMarker(map, data);
     });
-
 
     //Handles Marker Click events
     for (i=0; i<marker.length; i++){
@@ -130,20 +130,25 @@ function clusterclick (map, marker, truckinfo){
         });
 }
 
-function markerclick (map, marker, truckinfo){
-    google.maps.event.addListener(marker,'click',function() {
+ function markerclick (map, marker, truckinfo){
+    google.maps.event.addListener(marker,'click', async function() {
+        var names = await getNames();
+        // var info = await getInfo();
+        
+        console.log("Names:", names);
         console.log(marker);
         // console.log(truckinfo);
         map.setZoom(18);
         map.setCenter(marker.getPosition());
         // console.log(marker.getPosition());
+        $('#truck-name').text(names[marker.label-1]);
         var infowindow = new google.maps.InfoWindow({
-            content:"Hello World!"//truckinfo
+            content: names[marker.label-1]//truckinfo
         });
         infowindow.open(map, marker);
         });
-}
-
+    
+ }
 // Grabs coordinates and saves to database
 // var truckLocations = [];
 async function mapQuery(addr, i) {
@@ -178,6 +183,27 @@ async function mapQuery(addr, i) {
     // console.log(promise);
     return promise;
 }
+
+function getNames(){
+    var promise = $.ajax("/data", {
+        type: "GET"
+        }).then(
+        function(data) {
+            var promises = [];
+          
+            for(var i = 0; i < data.length; i++){
+                promises[i] = data[i].foodtruck_name;
+            }
+            // console.log(promises);
+            
+            return new Promise(resolve => {
+                resolve(promises);
+            });
+        }
+     );
+     return promise;
+}
+
 initMap();
 
 // var namesarray = [];
