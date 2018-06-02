@@ -24,7 +24,7 @@ for (l = 1; l< 100;l++){
     labels.push(String(l));
 }
 
-//Map Locations Array 
+//Map Locations Array
 
 var atlanta = {lat: 33.748995, lng: -84.387982};
 var locations = [];
@@ -48,7 +48,7 @@ $("#clearfirebase").on("click", function(event) {
 // This function handles events where the submit button is clicked
 $("#submit").on("click", function(event) {
     event.preventDefault();
-    
+
     var location = $("#location-input").val().trim();
     var geocodeQuery = "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + googlemapskey;
 
@@ -62,18 +62,18 @@ $("#submit").on("click", function(event) {
             console.log("name repeat");
             repeat = true;
             break;
-        // } else if (coordinates == locations[i]){
-        //     console.log("coordinates repeat");
-        //     break;
+            // } else if (coordinates == locations[i]){
+            //     console.log("coordinates repeat");
+            //     break;
         } else{
             // console.log("not a repeat");
         }
     }
-    
-    if (repeat == false) {  
+
+    if (repeat == false) {
         $.ajax({
-        url: geocodeQuery,
-        method: "GET"
+            url: geocodeQuery,
+            method: "GET"
         }).then(function(response) {
             // console.log(response);
             var latit = response.results[0].geometry.location.lat;
@@ -93,7 +93,7 @@ $("#submit").on("click", function(event) {
             }
         });
     }
-});  
+});
 
 
 var citiesobj = {};
@@ -113,23 +113,23 @@ $("#beer").on("click", function(event) {
     console.log(breweryInfo.breweryLocation);
     locations = [];
     showbrews(cities[0]);
-});  
+});
 
 function showbrews(city) {
     // console.log(breweryInfo.breweryLocation.length);
     brewsobj = breweryInfo.breweryLocation;
     console.log(brewsobj.length);
-    
+
     for (i=0;i<brewsobj.length;i++){
         // var breweryaddress = (breweryInfo.breweryLocation[i].address + " " + cities[i]);
         var breweryaddress = brewsobj[i].address +""+ city;
-        brewQuery(brewsobj[i].name, breweryaddress , i);    
+        brewQuery(brewsobj[i].name, breweryaddress , i);
     }
-    
+
     locations = Object.keys(brewerylocs).map(function(key) {
         // return [Number(key), locationsobj[key]];
         return brewerylocs[key];
-      });
+    });
 
     initMap();
 }
@@ -156,7 +156,7 @@ $(document).on("click", ".remove", function(){
 database.ref().on("value", function(snapshot) {
     // console.log(snapshot.val());
     citiesobj = snapshot.val();
-    i = snapshot.val().length; 
+    i = snapshot.val().length;
     loctable();
     initMap();
 });
@@ -190,7 +190,7 @@ database.ref().on("child_added", function(snapshot) {
     locations = Object.keys(locationsobj).map(function(key) {
         // return [Number(key), locationsobj[key]];
         return locationsobj[key];
-      });
+    });
 
     namesarray = Object.keys(namesobj).map(function(key) {
         // return [Number(key), locationsobj[key]];
@@ -230,26 +230,26 @@ var createRow = function(name, address, index){
             break;
         }
     }
-  };
+};
 
 //Display Maps
 function initMap() {
     // console.log(locations);
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 3,
-      center: atlanta
+        zoom: 3,
+        center: atlanta
     });
 
-    
+
     // Add some markers to the map.
     // Note: The code uses the JavaScript Array.prototype.map() method to
     // create an array of markers based on a given "locations" array.
     // The map() method here has nothing to do with the Google Maps API.
     var marker = locations.map(function(location, i) {
-      return new google.maps.Marker({
-        position: location,
-        label: labels[i % labels.length]
-      });
+        return new google.maps.Marker({
+            position: location,
+            label: labels[i % labels.length]
+        });
     });
 
     // Map events
@@ -263,13 +263,13 @@ function initMap() {
 
     google.maps.event.addListener(map, 'click', function(event) {
         console.log("map click");
-    //     // placeMarker(map, event.latLng);
-        });
+        //     // placeMarker(map, event.latLng);
+    });
 
     var infowindow = new google.maps.InfoWindow({
         content:"Hello World!"
     });
-    
+
     // console.log(marker[0].getPosition());
     var breakvar = false;
 
@@ -278,7 +278,7 @@ function initMap() {
     // Add a marker clusterer to manage the markers.
     var markerCluster = new MarkerClusterer(map, marker,
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-  }
+}
 
 function markerclick(arr){
     var test = toObject(arr);
@@ -299,24 +299,24 @@ function markerclick(arr){
 }
 
 
-  function toObject(arr) {
+function toObject(arr) {
     var rv = {};
     for (var i = 0; i < arr.length; ++i)
-      if (arr[i] !== undefined) rv[i] = arr[i];
+        if (arr[i] !== undefined) rv[i] = arr[i];
     return rv;
-  }
+}
 
-  function placeMarker(map, location) {
+function placeMarker(map, location) {
     // var marker = new google.maps.Marker({
     //   position: location,
     //   map: map
     // });
     var infowindow = new google.maps.InfoWindow({
-      content: 'Latitude: ' + location.lat() +
-      '<br>Longitude: ' + location.lng()
+        content: 'Latitude: ' + location.lat() +
+        '<br>Longitude: ' + location.lng()
     });
     infowindow.open(map,marker);
-  } 
+}
 
 
 // Beer Mapping API
@@ -364,10 +364,10 @@ var breweryRow = function(index, name, address,coordinates){
     // Append the table row to the table body
     tBody.append(tRow);
 
-  };
+};
 
-  var brewerylocs = [];
-  function brewQuery(brewname, addr, ind) {
+var brewerylocs = [];
+function brewQuery(brewname, addr, ind) {
     var breweryQuery = "https://maps.googleapis.com/maps/api/geocode/json?address=" + addr + "&key=" + googlemapskey;
     $.ajax({
         url: breweryQuery,

@@ -74,11 +74,14 @@ async function initMap() {
     // Add a marker clusterer to manage the markers.
     var markerCluster = new MarkerClusterer(map, marker,
     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'})
-    
-    var temp = markerCluster.clusters_;
+   
     console.log(markerCluster);
-    console.log(temp);
-    console.log(temp.length);
+    clusterclick(map, markerCluster);
+    
+    // var temp = markerCluster.clusters_;
+    // console.log(temp);
+    // console.log(temp[0]);
+    // console.log(temp.length);
     
 // Map events
     map.addListener('click', function(event) {
@@ -86,8 +89,8 @@ async function initMap() {
         console.log(event);
         data.lat = event.latLng.lat();
         data.lng = event.latLng.lng();
-        console.log("Longitude: "+ data.lng);
-        console.log("Latitidue: "+ data.lat);
+        // console.log("Longitude: "+ data.lng);
+        // console.log("Latitidue: "+ data.lat);
         // placeMarker(map, data);
     });
 
@@ -95,10 +98,6 @@ async function initMap() {
     for (i=0; i<marker.length; i++){
         markerclick(map, marker[i]);
     }
-    //Handles Cluster Click events
-    // for (i=0; i<marker.length; i++){
-    //     markerclick(map, marker[i]);
-    // }
 }
 
 //Places a new temporary marker
@@ -116,17 +115,19 @@ function placeMarker(map, location) {
 
 //Listener for marker clicks
 //markerCluster.clusters_
-function clusterclick (map, marker, truckinfo){
-    google.maps.event.addListener(marker,'click',function() {
-        console.log(marker);
-        // console.log(truckinfo);
-        map.setZoom(18);
-        map.setCenter(marker.getPosition());
-        // console.log(marker.getPosition());
+function clusterclick (map, markerCluster){
+    google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
+        // var size = cluster.getSize();
+        // console.log("clustersize", size);
+        var marks = cluster.getMarkers();
+        console.log("markers", marks);
+        // console.log(cluster);
+        map.setZoom(13);
+        map.setCenter(cluster.getCenter());
         var infowindow = new google.maps.InfoWindow({
             content:"Hello World!"//truckinfo
         });
-        infowindow.open(map, marker);
+        infowindow.open(map, markerCluster);
         });
 }
 
@@ -134,11 +135,7 @@ function clusterclick (map, marker, truckinfo){
     google.maps.event.addListener(marker,'click', async function() {
         var names = await getNames();
         // var info = await getInfo();
-        
-        console.log("Names:", names);
-        console.log(marker);
-        // console.log(truckinfo);
-        map.setZoom(18);
+        map.setZoom(16);
         map.setCenter(marker.getPosition());
         // console.log(marker.getPosition());
         $('#truck-name').text(names[marker.label-1]);
