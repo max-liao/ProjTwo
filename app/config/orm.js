@@ -11,7 +11,7 @@ var orm = {
     var queryString = "SELECT * FROM " + table + ";";
     connection.query(queryString, function(err, result) {
       if (err) throw err;
-      console.log(result);
+      //console.log(result);
       cb(result);
     });
   },
@@ -40,16 +40,20 @@ var orm = {
   },
   //Update value in row
   updateOne: function(table, keys, values, id, cb) {
-    var tempstring;
+    var tempstring = '';
 
      for(i = 0; i< keys.length; i++){
-      tempstring += keys[i] + " =  '"+values[i] +"',"
+      tempstring += keys[i] + " = '"+values[i] +"'"
+      if(i < keys.length-1){
+        tempstring += ', ';
+      }
     }
-    var queryString = "UPDATE "+ table +" SET " + tempstring + ";";
+    var queryString = "UPDATE "+ table +" SET " + tempstring 
     queryString += " WHERE id= ";
-    queryString += id;
+    queryString += id+ ";";;
 
-  
+    console.log(queryString);
+
     connection.query(queryString, function(err, result) {
       if (err) throw err;
       console.log(result);

@@ -62,7 +62,7 @@
 
               <div class="form-group">
                 <label for="truck-date">Date</label>
-                <input type="date" class="form-control" id="truck-date" size="20">
+                <input type="date" class="form-control" id="truck-date">
               </div>
 
               <button type="submit" class="btn btn-primary submit">Add Truck</button>
@@ -89,42 +89,42 @@
 
               <div class="form-group">
                 <label for="truck-name">Truck Name</label>
-                  <select class="chosen-select" id="foodtruck_name">
+                  <select class="chosen-select update" id="foodtruck_name">
                   <option value="">Select a Food Truck to Update</option>
                 </select>
               </div>
 
               <div class="form-group">
                   <label for="truck-name">New Truck Name</label>
-                  <input type="text" class="form-control" id="truck-name">
+                  <input type="text" class="form-control update" id="truck-name-update">
                 </div>
              
               <div class="form-group">
                 <label for="truck-description">Description</label>
-                <input type="text" class="form-control" id="truck-description">
+                <input type="text" class="form-control update" id="truck-description-update">
               </div>
 
               <div class="form-group">
                 <label for="truck-cuisine">Cuisine</label>
-                <input type="text" class="form-control" id="truck-cuisine">
+                <input type="text" class="form-control update" id="truck-cuisine-update">
               </div>
 
               <div class="form-group">
                 <label for="truck-location">Location</label>
-                <input type="text" class="form-control" id="truck-location">
+                <input type="text" class="form-control update" id="truck-location-update">
               </div>
 
               <div class="form-group">
                 <label for="truck-phone">Phone Number</label>
-                <input type="text" class="form-control" id="truck-phone">
+                <input type="text" class="form-control update" id="truck-phone-update">
               </div>
 
               <div class="form-group">
                 <label for="truck-date">Date</label>
-                <input type="date" class="form-control" id="truck-date" size="20">
+                <input type="date" class="form-control update" id="truck-date-update">
               </div>
 
-              <button type="submit" class="btn btn-primary update">Update Truck</button>
+              <button type="submit" class="btn btn-primary update-button">Update Truck</button>
             </form>
 
           </div>
@@ -148,6 +148,17 @@
         });
         return isValid;
       }
+
+    function validateUpdateForm() {
+      var isValid = true;
+        $(".update").each(function() {
+          if ($(this).val() === "") {
+            isValid = false;
+          }
+        });
+        return isValid;
+      }
+
 //this call will pull the id and names of the foodtruck to populate the dropdown
     $.ajax("/data", {
     type: "GET",
@@ -173,7 +184,7 @@
       event.preventDefault();
 
       var formattedDate = $("#truck-date").val().trim();
-      formattedDate = moment(formattedDate).format();
+      formattedDate = moment(formattedDate).format("YYYY-MM-DD HH:mm:ss");
       if(validateForm()){
       // Here we grab the form elements and remove blank spaces
       var newTruck = {
@@ -206,9 +217,57 @@
  
         });
     }else {
-        alert("Please fill out all fields before submitting!");
+        alert("Please fill out all fields before submitting the new truck!");
         
       }
     });
+  //when the update is clicked to update an existing food truck, validate the form and send the data
+    $(".update-button").on("click", function(event) {
+      event.preventDefault();
 
+      var formattedDate = $("#truck-date-update").val().trim();
+      formattedDate = moment(formattedDate).format("YYYY-MM-DD HH:mm:ss");
+      if(validateUpdateForm()){
+      // Here we grab the form elements and remove blank spaces
+      var updateTruck = {
+        id: $("#foodtruck_name").val().trim(),
+        foodtruck_name: $("#truck-name-update").val().trim(),
+        contact: $("#truck-phone-update").val().trim(),
+        descr: $("#truck-description-update").val().trim(),
+        cuisine: $("#truck-cuisine-update").val().trim(),
+        location: $("#truck-location-update").val().trim(),
+        date: formattedDate
+      };
+
+      console.log(updateTruck);
+
+
+      $.ajax("/api/model/" + updateTruck.id, {
+        type: "PUT",
+        data: updateTruck
+      }).then(
+        function(data) {
+
+          // If a truck is added, send alert.
+          if (data) {
+            alert("Congratulations, your truck was updated!");
+          }
+          else {
+            alert("Sorry, the truck was not updated");
+          }
+          // Clear the form when submitting
+         $("#foodtruck_name").val('');
+         $("#truck-name-update").val('');
+         $("#truck-phone-update").val('');
+         $("#truck-descirption-update").val('');
+         $("#truck-cusine-update").val('');
+         $("#truck-location-update").val('')
+         $("#truck-date-update").val('')
+ 
+        });
+    }else {
+        alert("Please fill out all fields before submitting the update!");
+        
+      }
+    });
 </script>
