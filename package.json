@@ -1,7 +1,7 @@
 {
-  "name": "burger",
+  "name": "projecttwo",
   "version": "1.0.0",
-  "description": "Burgers from database are displayed depending on their devoured state.",
+  "description": "Food trucks from database are displayed on Google Map.",
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.18.2",

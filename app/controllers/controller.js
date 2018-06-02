@@ -34,6 +34,7 @@ router.get("/data", function(req, res) {
   });
 });
 
+<<<<<<< HEAD
 // <<<<<<< thomas
 // router.get("/userinput", function(req, res) {
 //   res.sendFile(path.join(__dirname, "../public/userInput.html"));
@@ -47,6 +48,9 @@ router.get("/data", function(req, res) {
 // =======
 // // 
 // >>>>>>> Max
+=======
+// 
+>>>>>>> origin/master
 router.get("/locations", function(req, res) {
   model.selectlocations(function(data) {
 
@@ -71,8 +75,7 @@ router.post("/api/model", function(req, res) {
    model.createone(keys, values, function(result) {
     // Send back the ID of the new quote
     // res.json({ id: result.insertId });
-    //res.json({ id: result.id });
-    console.log(result);
+    res.json({ id: result.id });
   });
 });
 
