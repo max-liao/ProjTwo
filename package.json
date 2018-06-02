@@ -1,10 +1,10 @@
 {
   "name": "projecttwo",
   "version": "1.0.0",
-  "description": "Food trucks from database are displayed on Google Map.",
+  "description": "Team:",
   "main": "server.js",
   "dependencies": {
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "mysql": "^2.15.0"
@@ -16,12 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/max-liao/burger.git"
+    "url": "git+https://github.com/max-liao/ProjectTwo.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/max-liao/burger/issues"
+    "url": "https://github.com/max-liao/ProjectTwo/issues"
   },
-  "homepage": "https://github.com/max-liao/burger#readme"
+  "homepage": "https://github.com/max-liao/ProjectTwo#readme"
 }
