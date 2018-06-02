@@ -52,7 +52,7 @@ async function initMap() {
     console.log(locations.length);
 
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 7,
+      zoom: 10,
       center: atlanta
     });
     
@@ -73,8 +73,12 @@ async function initMap() {
     
     // Add a marker clusterer to manage the markers.
     var markerCluster = new MarkerClusterer(map, marker,
-    {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-
+    {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'})
+    console.log(markerCluster);
+    var temp = markerCluster.clusters_;
+    console.log(temp);
+    console.log(temp.length);
+    
 // Map events
     map.addListener('click', function(event) {
         var data = {};
@@ -91,6 +95,10 @@ async function initMap() {
     for (i=0; i<marker.length; i++){
         markerclick(map, marker[i]);
     }
+    //Handles Cluster Click events
+    // for (i=0; i<marker.length; i++){
+    //     markerclick(map, marker[i]);
+    // }
 }
 
 //Places a new temporary marker
@@ -107,11 +115,26 @@ function placeMarker(map, location) {
 } 
 
 //Listener for marker clicks
+//markerCluster.clusters_
+function clusterclick (map, marker, truckinfo){
+    google.maps.event.addListener(marker,'click',function() {
+        console.log(marker);
+        // console.log(truckinfo);
+        map.setZoom(18);
+        map.setCenter(marker.getPosition());
+        // console.log(marker.getPosition());
+        var infowindow = new google.maps.InfoWindow({
+            content:"Hello World!"//truckinfo
+        });
+        infowindow.open(map, marker);
+        });
+}
+
 function markerclick (map, marker, truckinfo){
     google.maps.event.addListener(marker,'click',function() {
         console.log(marker);
         // console.log(truckinfo);
-        map.setZoom(15);
+        map.setZoom(18);
         map.setCenter(marker.getPosition());
         // console.log(marker.getPosition());
         var infowindow = new google.maps.InfoWindow({
@@ -155,16 +178,12 @@ async function mapQuery(addr, i) {
     // console.log(promise);
     return promise;
 }
-
-
 initMap();
 
 // var namesarray = [];
 // // Import from database all the names of the trucks and put them into namesarray
 // //function import(db)
 // //returns namesarray
-
-
 
 
 // // The submit button grabs the user input and converts it into coordinates

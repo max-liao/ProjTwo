@@ -51,17 +51,7 @@ router.get("/locations", function(req, res) {
 
 //New row
 router.post("/api/model", function(req, res) {
-<<<<<<< HEAD
   model.createone(req.body.keys, req.body.values, function(result) {
-=======
-
-  var keys = [ 'foodtruck_name', 'contact', 'descr', 'cuisine', 'location', 'date'];
-   var values = [req.body.foodtruck_name, req.body.contact, req.body.descr, req.body.cuisine, req.body.location, req.body.date];
-  console.log ('keys:' + keys);
-  console.log ('values :' + values);
-   model.createone(keys, values, function(result) {
-    // Send back the ID of the new quote
->>>>>>> thomas
     // res.json({ id: result.insertId });
     //res.json({ id: result.id });
     console.log("result from createone" + result);
