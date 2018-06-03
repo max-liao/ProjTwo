@@ -1,11 +1,37 @@
-html, body, #map { height: 100%; margin: 0; padding: 0; overflow: hidden; }
-#map {
-    height: 500px;  /* The height is 400 pixels */
-    width: 100%;  /* The width is the width of the web page */
-   }
+.nav-wrapper.container {
+    min-width: 95%;
+}
 
-#Mapjumbo{
-    height: 25%;
-    margin: 10px;
-    padding: 20px;
+.mini-head {
+    padding-top: 5rem;
+}
+
+.card-head {
+    padding: 2rem 1rem;
+  }
+
+.main-card {
+    max-width: 50rem;
+    min-width: 50vw;
+    margin: 2rem auto;
+  }
+
+.card-panel {
+    margin-top: auto;
+}
+
+.card-head .divider {
+    margin-top: 2rem;
+  }
+
+.datepicker-date-display {
+    background-color: #f44336;
+  }
+
+.datepicker-cancel, .date-picker-today, .datepicker-done, .datepicker-clear {
+    color: #f44336;
+  }
+
+.responsive-table {
+    margin-top: 10rem;
 }

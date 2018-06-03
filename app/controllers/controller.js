@@ -51,6 +51,7 @@ router.get("/locations", function(req, res) {
 
 //New row
 router.post("/api/model", function(req, res) {
+  console.log('server got', JSON.stringify(req.body, null, 2))
   model.createone(req.body.keys, req.body.values, function(result) {
     // res.json({ id: result.insertId });
     //res.json({ id: result.id });
