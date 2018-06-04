@@ -34,24 +34,36 @@ router.get("/data", function(req, res) {
   });
 });
 
-// 
+// Shows all trucks data based on the column and the id of the truck
+router.get("/data/:table/:col/:id", function(req, res) {
+  var id = req.params.id;
+  var table = req.params.table;
+  var col = req.params.col;
+  model.selectOne(table,col, id, function(data) {
+  res.json(data);
+  console.log(data);
+  });
+});
+
+
+// returns all the locations of the food truck
 router.get("/locations", function(req, res) {
   model.selectlocations(function(data) {
 
-    // var places = [];
-    // for(var i = 0; i < data.length; i++){
-    //   places[i] = data[i].location;
-    // }
-    //console.log(data[0].location);
     res.json(data);
-    //console.log(places);
   });
 
 });
 
-//New row
+//Adds New food truck
 router.post("/api/model", function(req, res) {
-  model.createone(req.body.keys, req.body.values, function(result) {
+
+  var keys = [ 'foodtruck_name', 'contact', 'descr', 'cuisine', 'location', 'date'];
+   var values = [req.body.foodtruck_name, req.body.contact, req.body.descr, req.body.cuisine, req.body.location, req.body.date];
+  console.log ('keys:' + keys);
+  console.log ('values :' + values);
+   model.createone(keys, values, function(result) {
+    // Send back the ID of the new quote
     // res.json({ id: result.insertId });
     //res.json({ id: result.id });
     console.log("result from createone" + result);
@@ -68,6 +80,7 @@ router.put("/api/model/:id", function(req, res) {
         // If no rows were changed, then the ID must not exist, so 404
         return res.status(404).end();
       }
+      res.json(result);
       res.status(200).end();
     }
   );

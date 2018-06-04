@@ -131,16 +131,49 @@ function clusterclick (map, markerCluster){
         });
 }
 
- function markerclick (map, marker, truckinfo){
+//Listener for marker clicks
+function markerclick (map, marker, truckinfo){
     google.maps.event.addListener(marker,'click', async function() {
-        var names = await getNames();
-        // var info = await getInfo();
-        map.setZoom(16);
+        var name = await getNames();
+
+        $('#menulist').empty();
+       
+        console.log("NAME:", name);
+        console.log(marker);
+        // console.log(truckinfo);
+        map.setZoom(18);
         map.setCenter(marker.getPosition());
         // console.log(marker.getPosition());
-        $('#truck-name').text(names[marker.label-1]);
+        var index = marker.label;
+        
+    
+        var info = await getInfo("food_truck", "id", index);
+        console.log(info[0]);
+        //print the truck info to maps.html
+         $('#truck-name').html("<b>" + info[0].foodtruck_name + "</b><hr>");
+         $('#descr').text(info[0].descr);
+         $('#contact').text(info[0].contact);
+
+         //get the menu info and add it to maps.html
+         var menuinfo = await getInfo("truck_menu", "truck_id", index);
+         console.log("menu info: " + menuinfo[0].menu_item);
+         if(menuinfo.length > 1){
+             $("#menulist").html("<b>Menu Highlights</b><hr>");
+         }
+         else{
+            $("#menulist").text("");
+         }
+         for(var i = 0; i<menuinfo.length; i++){
+             
+             var menuitem = "<li>" + menuinfo[i].menu_item + " -- "
+                                   + menuinfo[i].menu_description + " -- $"
+                                   + menuinfo[i].price
+                                   + "</li>"
+             $("#menulist").append(menuitem);
+         }
+
         var infowindow = new google.maps.InfoWindow({
-            content: names[marker.label-1]//truckinfo
+            content: name[index-1]//truckinfo
         });
         infowindow.open(map, marker);
         });
@@ -201,6 +234,28 @@ function getNames(){
      return promise;
 }
 
+async function getInfo(table, col, id){
+
+    var promise = await $.ajax("/data/" + table + "/"  + col + "/" + id, {
+     type: "GET"
+     }).then(
+     function(data) {
+         var promises = [];
+       
+         for(var i = 0; i < data.length; i++){
+             promises[i] = data[i];
+ 
+         }
+         console.log("data from get info" + promises);
+         
+         return new Promise(resolve => {
+             resolve(promises);
+         });
+     }
+ );
+ console.log("from getinfo: " + promise);
+ return promise;
+ }
 initMap();
 
 // var namesarray = [];
