@@ -9,16 +9,19 @@ var model = {
       cb(res);
     });
   },
+  selectOne: function(table, col, id, cb) {
+    orm.selectOne(table, col, id, function(res) {
+      cb(res);
+    });
+  },
   selectlocations: function(cb) {
     orm.selectAlllocations("food_truck", function(res) {
       cb(res);
     });
   },
   createone: function(keys, values, cb) {
-    console.log(keys + '\n' + values)
     orm.createOne("food_truck", keys, values, function(res) {
       cb(res);
-      
     });
   },
   updateone: function(keys, values, id, cb) {

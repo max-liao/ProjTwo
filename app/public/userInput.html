@@ -17,6 +17,21 @@
 
   <div class="container">
 
+      <div class="masthead clearfix">
+          <div class="inner">
+            <h1 class="masthead-brand">User Input</h1>
+          </div>
+          <nav>
+            <ul class="nav masthead-nav">
+              <li><a href="/">Home</a></li>
+              <hr>
+              <li><a href="/input">User Input</a></li>
+              <hr>
+              <li class="active"><a href="/map">Map</a></li>
+            </ul>
+          </nav>
+        </div>
+
     <div class="jumbotron col-lg-6">
       <h1 class="text-center">User Input</h1>
       <hr>
@@ -72,15 +87,16 @@
         </div>
       </div>
       </div>
-      <hr>
+      
       <div class="row">
          
-        <div class="col-lg-6">
+      <div class="col-lg-6">
 
         <div class="panel panel-default">
           <div class="panel-heading">
               <br>
             <h4 class="panel-title">Update Truck</h4>
+            <hr>
             <br>
           </div>
           <div class="panel-body">
@@ -199,9 +215,9 @@
       console.log(newTruck);
       $.post("/api/model", newTruck,
         function(data) {
-
+          console.log("changed rows: " + data[0].changedRows);
           // If a truck is added, send alert.
-          if (data) {
+          if (data.length > 0) {
             alert("Congratulations, your truck was added!");
           }
           else {
@@ -247,7 +263,8 @@
         data: updateTruck
       }).then(
         function(data) {
-
+          console.log("changed rows: " + data);
+          
           // If a truck is added, send alert.
           if (data) {
             alert("Congratulations, your truck was updated!");
@@ -259,8 +276,8 @@
          $("#foodtruck_name").val('');
          $("#truck-name-update").val('');
          $("#truck-phone-update").val('');
-         $("#truck-descirption-update").val('');
-         $("#truck-cusine-update").val('');
+         $("#truck-description-update").val('');
+         $("#truck-cuisine-update").val('');
          $("#truck-location-update").val('')
          $("#truck-date-update").val('')
  
