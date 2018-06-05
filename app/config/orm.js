@@ -15,6 +15,17 @@ var orm = {
       cb(result);
     });
   },
+  selectOne: function(table, col, id, cb) {
+
+    var queryString = "SELECT * FROM " + table + " WHERE ";
+    queryString += col + " = " + id + ';';
+    console.log(queryString);
+    connection.query(queryString, function(err, result) {
+      if (err) throw err;
+
+      cb(result);
+    });
+  },
   selectAlllocations: function(table, cb) {
     var queryString = "SELECT location FROM " + table + ";";
     connection.query(queryString, function(err, result) {
@@ -34,7 +45,6 @@ var orm = {
     console.log(queryString);
     connection.query(queryString, function(err, result) {
       if (err) throw err;
-      console.log.apply(queryString);
       console.log(result);
       cb(result);
     });
