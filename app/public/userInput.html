@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <title>User Input Page</title>
-
-  <!-- Latest compiled and minified CSS & JS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Food Truck Finder; User Input</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <div class="container">
+<!-- Carrie commented out attempting to get files to work properly together ********************* start -->
+
+  <!-- <div class="container">
 
       <div class="masthead clearfix">
           <div class="inner">
@@ -40,8 +40,9 @@
 
     <div class="row">
       <div class="col-lg-6">
-
+      -->
         <!-- New Truck Page -->
+        <!--
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">New Truck</h4>
@@ -109,48 +110,167 @@
                   <option value="">Select a Food Truck to Update</option>
                 </select>
               </div>
+            *********************************** end -->
 
-              <div class="form-group">
-                  <label for="truck-name">New Truck Name</label>
-                  <input type="text" class="form-control update" id="truck-name-update">
+    <div>
+        <nav class="red">
+            <div class="nav-wrapper container">
+                <a href="index.html" class="brand-logo left">Truck Finder</a>
+                <ul class="right">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="map.html">Map</a></li>
+                    <li><a href="truckTable.html">Trucks</a></li>
+                    <li><a href="userInput.html">User Input</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="card main-card">
+            <div class="card-head red yellow-text center">
+                <h2>User Input</h2>
+                <!--<div class="divider grey"></div>-->
+                <p class="flow-text">Add or Update a Food Truck</p>
+            </div>
+
+            <div class="card-content">
+                <p class="flow-text">New Truck</p>
+                <div class="row">
+                    <form class="col s12" onsubmit="addTruck; return false">
+                        <div class="row">
+                            <div class="input-field col s12 l12">
+                                <!-- <label for="truck-name">Truck Name</label> -->
+                                <select class="chosen-select update browser-default" id="foodtruck_name">
+                                    <option value="">Select a Food Truck to Update</option>
+                                </select>
+                            </div>
+                            <div class="input-field col s12 m12 l6">
+                                <input type="text" id="truck_name">
+                                <label for="truck_name">Truck Name</label>
+                            </div>
+                            <div class="input-field col s12 m12 l6">
+                                <input type="text" id="description">
+                                <label for="description">Description</label>
+                            </div>
+                            <div class="input-field col s12 m12 l6">
+                                <input type="text" id="cuisine">
+                                <label for="cuisine">Cuisine</label>
+                            </div>
+                            <div class="input-field col s12 m12 l6">
+                                <input type="text" id="location">
+                                <label for="location">Location</label>
+                            </div>
+                            <div class="input-field col s12 m12 l6">
+                                <input type="text" id="phone_number">
+                                <label for="phone_number">Phone Number</label>
+                            </div>
+                            <div class="input-field col s12 m12 l6">
+                                <input type="text" id="date" class="datepicker">
+                                <label for="date">Date</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <button id="addTruck" type="submit" class="btn yellow blue-grey-text text-darken-4 btn-large waves-effect">Add truck</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-             
-              <div class="form-group">
-                <label for="truck-description">Description</label>
-                <input type="text" class="form-control update" id="truck-description-update">
-              </div>
-
-              <div class="form-group">
-                <label for="truck-cuisine">Cuisine</label>
-                <input type="text" class="form-control update" id="truck-cuisine-update">
-              </div>
-
-              <div class="form-group">
-                <label for="truck-location">Location</label>
-                <input type="text" class="form-control update" id="truck-location-update">
-              </div>
-
-              <div class="form-group">
-                <label for="truck-phone">Phone Number</label>
-                <input type="text" class="form-control update" id="truck-phone-update">
-              </div>
-
-              <div class="form-group">
-                <label for="truck-date">Date</label>
-                <input type="date" class="form-control update" id="truck-date-update">
-              </div>
-
-              <button type="submit" class="btn btn-primary update-button">Update Truck</button>
-            </form>
-
-          </div>
+            </div>
         </div>
 
-      </div>
-    </div>
-    </div>
-  </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var elem = document.querySelectorAll('.datepicker');
+                var instances = M.Datepicker.init(elem, {
+                    autoClose: true
+                })
+
+                 $.ajax("/data", {
+                    type: "GET",
+                    }).then(
+                    function(data) {
+                    var trucks =[];
+                    var id = [];
+                    for (var i = 0; i<data.length; i++){
+                        id[i] = data[i].id;
+                        trucks[i] = data[i].foodtruck_name;
+                        var newoption = '<option value='+ '"'+ id[i] + '"' + '>' + trucks[i] + '</option>';
+                        $('#foodtruck_name').append(newoption);
+                        //console.log(newoption);
+                    }
+                    //console.log(trucks);
+                    }
+                );
+
+                $('#addTruck').click(function () {
+                    //alert('hey!')
+                    addTruck()
+                })
+
+            })
+
+            // BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER
+            // $(".submit").on("click", );
+
+            function addTruck() {
+                //event.preventDefault();
+
+                // Here we grab the form elements
+                var newTruck = {
+                    foodtruck_name:  $('#foodtruck_name').val() || $("#truck_name").val().trim(),
+                    contact: $("#phone_number").val().trim(),
+                    descr: $("#description").val().trim(),
+                    cuisine: $("#cuisine").val().trim(),
+                    location: $("#location").val().trim(),
+                    date: $("#date").val().trim()
+                };
+
+                console.log(newTruck);
+
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/model',
+                    data: newTruck,
+                    success: function (data) {
+                        alert('Yay! Truck successfully added!')
+                        console.log(data)
+                    },
+                    error: function (err) {
+                        alert('Sorry! There was an error adding the truck.  Please try again.')
+                        console.log(err)
+                    }
+                })
+                // $.post("/api/model", newTruck,
+                //     function (data) {
+
+                //         // If a table is available... tell user they are booked.
+                //         if (data) {
+                //             alert("Truck added!");
+                //         }
+
+
+                //         else {
+                //             alert("Sorry truck not added");
+                //         }
+
+                //         // Clear the form when submitting
+                //         $("#truck-name").val('');
+                //         $("#truck-phone").val('');
+                //         $("#truck-descirption").val('');
+                //         $("#truck-cusine").val('');
+                //         $("#truck-location").val('')
+                //         $("#truck-date").val('')
+
+                //     });
+
+                // return false;
+
+            }
+        </script>
 </body>
+</html>
+
+<!-- Carrie commented out attempting to get files to work properly together ********************* start -->
+<!--
 </html>
 
 <script type="text/javascript">
@@ -288,3 +408,4 @@
       }
     });
 </script>
+  ********************************************************** end /
