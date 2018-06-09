@@ -120,8 +120,10 @@ function clusterclick (map, markerCluster){
         // console.log("clustersize", size);
         var marks = cluster.getMarkers();
         console.log("markers", marks);
-        // console.log(cluster);
-        map.setZoom(13);
+
+        var arr = [];
+        
+        // map.setZoom(13);
         map.setCenter(cluster.getCenter());
         var infowindow = new google.maps.InfoWindow({
             content:"Hello World!"//truckinfo
@@ -137,7 +139,7 @@ function markerclick (map, marker, truckinfo){
 
         $('#menulist').empty();
        
-        console.log("NAME:", name);
+        // console.log("NAME:", name);
         console.log(marker);
         // console.log(truckinfo);
         map.setZoom(18);
@@ -147,7 +149,7 @@ function markerclick (map, marker, truckinfo){
         
     
         var info = await getInfo("food_truck", "id", index);
-        console.log(info[0]);
+        // console.log(info[0]);
         //print the truck info to maps.html
          $('#truck-name').html("<b>" + info[0].foodtruck_name + "</b><hr>");
          $('#descr').text(info[0].descr);
@@ -155,7 +157,7 @@ function markerclick (map, marker, truckinfo){
 
          //get the menu info and add it to maps.html
          var menuinfo = await getInfo("truck_menu", "truck_id", index);
-         console.log("menu info: " + menuinfo[0].menu_item);
+        //  console.log("menu info: " + menuinfo[0].menu_item);
          if(menuinfo.length > 1){
              $("#menulist").html("<b>Menu Highlights</b><hr>");
          }
@@ -170,7 +172,8 @@ function markerclick (map, marker, truckinfo){
                                    + "</li>"
              $("#menulist").append(menuitem);
          }
-
+        
+         console.log(name[index-1]);
         var infowindow = new google.maps.InfoWindow({
             content: name[index-1]//truckinfo
         });
@@ -245,14 +248,14 @@ async function getInfo(table, col, id){
              promises[i] = data[i];
  
          }
-         console.log("data from get info" + promises);
+        //  console.log("data from get info" + promises);
          
          return new Promise(resolve => {
              resolve(promises);
          });
      }
  );
- console.log("from getinfo: " + promise);
+//  console.log("from getinfo: " + promise);
  return promise;
  }
 initMap();
