@@ -32,9 +32,10 @@
 					<!-- navigation -->
 					<nav class="pull-right nav-collapse collapse">
 						<ul id="menu-main" class="nav">
-							<li><a title="map" href="/map">Map</a></li>
-							<li><a title="table" href="truckTable.html">Table</a></li>
-							<li><a title="input" href="userInput.html">Update a Truck</a></li>
+							<li><a title="map" href="#mapContainer">Map</a></li>
+							<li><a title="oldmap" href="/map">Old Map</a></li>
+							<!-- <li><a title="table" href="truckTable.html">Table</a></li> -->
+							<!-- <li><a title="input" href="userInput.html">Update a Truck</a></li> -->
 							<li><a title="team" href="#about">About</a></li>
 							<li><a title="search" href="#search">Search</a></li>
 							<li><a title="works" href="#works">Works</a></li>
@@ -170,7 +171,7 @@
 		<!-- /.container -->
 	</section>
 	<!-- end section: team -->
-	<!-- section: services -->
+	<!-- section: search -->
 	<section id="search" class="section orange">
 		<div class="container">
 			<h4>Search</h4>
@@ -215,7 +216,37 @@
 			</div>
 		</div>
 	</section>
-	<!-- end section: services -->
+	<!-- end section: search -->
+	<!-- section: map -->
+	<section id = "mapContainer" class="spacer bg3">
+		<div class="container">
+			<div class="row">
+				<div class="span12 aligncenter flyLeft">
+					<div>
+						<div class="jumbotron" id="Mapjumbo">
+						<h1 style="color:ghostwhite;"> Map </h1>
+						<!-- <h4> Map </h4> -->
+						<hr>
+						<!-- <h1 class="text-center">Food Truck Info!</h1> -->
+						<div class="row">
+							<div class="col-lg-4">
+							<p id = "truck-name"></p>
+							<p id = "descr"></p>
+							<p id = "contact"></p>
+							</div>
+							<div class="col-lg-8">
+							<ul id = "menulist"></ul>
+							</div>
+						</div>  
+						</div>
+					</div>
+					<!--The div element for the map -->
+					<div id="map"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end section: map -->
 	<!-- section: works -->
 	<section id="works" class="section">
 		<div class="container clearfix">
@@ -411,6 +442,8 @@
 			</div>
 		</div>
 	</section>
+	
+
 	<!-- spacer section -->
 	<section class="spacer bg3">
 		<div class="container">
@@ -583,6 +616,12 @@
 		<!-- ./container -->
 	</footer>
 	<a href="#" class="scrollup"><i class="icon-angle-up icon-square icon-bgdark icon-2x"></i></a>
+	<!-- Google maps markerclusterer -->
+	<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6b6PThKZfWpNBOo_s6f1caBl9iB2PG4E"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="js/map.js"></script>
+	
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery.scrollTo.js"></script>
 	<script src="js/jquery.nav.js"></script>

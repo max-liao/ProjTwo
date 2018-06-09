@@ -114,7 +114,6 @@ function placeMarker(map, location) {
 } 
 
 //Listener for marker clicks
-//markerCluster.clusters_
 function clusterclick (map, markerCluster){
     google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
         // var size = cluster.getSize();
@@ -257,28 +256,3 @@ async function getInfo(table, col, id){
  return promise;
  }
 initMap();
-
-// var namesarray = [];
-// // Import from database all the names of the trucks and put them into namesarray
-// //function import(db)
-// //returns namesarray
-
-
-// // The submit button grabs the user input and converts it into coordinates
-// $("#submit").on("click", function(event) {
-//     event.preventDefault();
-    
-//     var location = $("#location-input").val().trim();
-//     var geocodeQuery = "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + googlemapskey;
-
-//     var repeat = repeatCheck(namesarray,location);
-//     if (location == ""){
-//         console.log("no Input");
-//     } else if (repeat === true){
-//         console.log("name repeat");
-//     } else {
-//         mapQuery(adrr);
-//         //add marker here
-//     }
-
-// });  
