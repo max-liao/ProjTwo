@@ -1,13 +1,9 @@
 // Dependencies
 // =============================================================
 var express = require("express");
-
 var router = express.Router();
-
 var model = require("../models/model.js");
-
 var path = require("path");
-
 var bodyParser = require("body-parser");
 
 // Routes
@@ -45,11 +41,9 @@ router.get("/data/:table/:col/:id", function(req, res) {
   });
 });
 
-
 // returns all the locations of the food truck
 router.get("/locations", function(req, res) {
   model.selectlocations(function(data) {
-
     res.json(data);
   });
 
@@ -57,16 +51,18 @@ router.get("/locations", function(req, res) {
 
 //Adds New food truck
 router.post("/api/model", function(req, res) {
+  console.log('server got', JSON.stringify(req.body, null, 2))
+  model.createone(req.body.keys, req.body.values, function(result) {
 
   var keys = [ 'foodtruck_name', 'contact', 'descr', 'cuisine', 'location', 'date'];
-   var values = [req.body.foodtruck_name, req.body.contact, req.body.descr, req.body.cuisine, req.body.location, req.body.date];
+  var values = [req.body.foodtruck_name, req.body.contact, req.body.descr, req.body.cuisine, req.body.location, req.body.date];
   console.log ('keys:' + keys);
   console.log ('values :' + values);
    model.createone(keys, values, function(result) {
-    // Send back the ID of the new quote
-    // res.json({ id: result.insertId });
-    //res.json({ id: result.id });
-    console.log("result from createone" + result);
+      // res.json({ id: result.insertId });
+      res.json({ id: result.id });
+      console.log("result from createone" + result);
+    });
   });
 });
 

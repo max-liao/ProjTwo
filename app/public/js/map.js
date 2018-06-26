@@ -73,7 +73,7 @@ async function initMap() {
     
     // Add a marker clusterer to manage the markers.
     var markerCluster = new MarkerClusterer(map, marker,
-    {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'})
+    {maxZoom: 22, imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'})
    
     console.log(markerCluster);
     clusterclick(map, markerCluster);
@@ -96,7 +96,7 @@ async function initMap() {
 
     //Handles Marker Click events
     for (i=0; i<marker.length; i++){
-        markerclick(map, marker[i]);
+        markerclick(map, marker[i], false);
     }
 }
 
@@ -114,41 +114,84 @@ function placeMarker(map, location) {
 } 
 
 //Listener for marker clicks
-//markerCluster.clusters_
-function clusterclick (map, markerCluster){
-    google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
+async function clusterclick (map, markerCluster){
+    var names = await getNames();
+    google.maps.event.addListener(markerCluster, 'clusterclick', async function(cluster) {
         // var size = cluster.getSize();
         // console.log("clustersize", size);
         var marks = cluster.getMarkers();
-        console.log("markers", marks);
-        // console.log(cluster);
-        map.setZoom(13);
-        map.setCenter(cluster.getCenter());
-        var infowindow = new google.maps.InfoWindow({
-            content:"Hello World!"//truckinfo
+        // console.log("markers", marks);
+
+        var array = [];
+        for (i = 0; i < marks.length; i++) {
+            array.push(marks[i].label - 1);
+        }
+
+        var infoWindow = new google.maps.InfoWindow({
+            content:"Hello World!"
         });
-        infowindow.open(map, markerCluster);
-        });
+
+        var infonames = "";
+
+        for (i = 0; i < array.length; i++) {
+            infonames += `${names[array[i]]}, `;
+        }
+        infonames = infonames.slice(0, -2);
+        console.log(infonames);
+
+        if (map.getZoom() > 15) {
+            infoWindow.setContent(array.length + " markers <br>" + infonames);
+            infoWindow.setPosition(cluster.getCenter());
+            infoWindow.open(map);
+        }
+
+        var info = [];
+        var menuinfo = [];
+        for (i = 0; i < marks.length; i++) {
+            var truckobj = await getInfo("food_truck", "id", marks[i].label);
+            info.push(truckobj);
+            var menu = await getInfo("truck_menu", "truck_id", marks[i].label);
+            menuinfo.push(menu);
+        }
+        // console.log(info);
+        // console.log(menuinfo);
+
+        for (i = 0; i < marks.length; i++) {
+            $('#truck-name').append(`<h4><b><strong> ${info[i][0].foodtruck_name} </b></strong></h4> ${info[i][0].descr}<br>${info[i][0].contact}`);
+
+            // if (menuinfo.length > 1){
+                // $("#truck-name").append("<b> <br> \n Menu Highlights</b>");
+            // }
+            //get the menu info and add it to maps.html
+            
+            for(var j = 0; j < menuinfo[i].length; j++){
+                var menuitem = "<li>" + menuinfo[i][j].menu_item + " -- "
+                                    + menuinfo[i][j].menu_description + " -- $"
+                                    + menuinfo[i][j].price
+                                    + "</li>"
+                $("#truck-name").append(menuitem);
+            }
+            $("#truck-name").append("<hr>");
+        }
+    });
 }
 
 //Listener for marker clicks
-function markerclick (map, marker, truckinfo){
+function markerclick (map, marker){
     google.maps.event.addListener(marker,'click', async function() {
         var name = await getNames();
-
         $('#menulist').empty();
        
-        console.log("NAME:", name);
+        // console.log("NAME:", name);
         console.log(marker);
         // console.log(truckinfo);
         map.setZoom(18);
         map.setCenter(marker.getPosition());
         // console.log(marker.getPosition());
         var index = marker.label;
-        
     
         var info = await getInfo("food_truck", "id", index);
-        console.log(info[0]);
+
         //print the truck info to maps.html
          $('#truck-name').html("<b>" + info[0].foodtruck_name + "</b><hr>");
          $('#descr').text(info[0].descr);
@@ -156,9 +199,9 @@ function markerclick (map, marker, truckinfo){
 
          //get the menu info and add it to maps.html
          var menuinfo = await getInfo("truck_menu", "truck_id", index);
-         console.log("menu info: " + menuinfo[0].menu_item);
+        //  console.log("menu info: " + menuinfo[0].menu_item);
          if(menuinfo.length > 1){
-             $("#menulist").html("<b>Menu Highlights</b><hr>");
+            //  $("#menulist").html("<b>Menu Highlights</b><hr>");
          }
          else{
             $("#menulist").text("");
@@ -171,13 +214,13 @@ function markerclick (map, marker, truckinfo){
                                    + "</li>"
              $("#menulist").append(menuitem);
          }
-
+        
+         console.log(name[index-1]);
         var infowindow = new google.maps.InfoWindow({
             content: name[index-1]//truckinfo
         });
         infowindow.open(map, marker);
         });
-    
  }
 // Grabs coordinates and saves to database
 // var truckLocations = [];
@@ -246,39 +289,14 @@ async function getInfo(table, col, id){
              promises[i] = data[i];
  
          }
-         console.log("data from get info" + promises);
+        //  console.log("data from get info" + promises);
          
          return new Promise(resolve => {
              resolve(promises);
          });
      }
  );
- console.log("from getinfo: " + promise);
+//  console.log("from getinfo: " + promise);
  return promise;
  }
 initMap();
-
-// var namesarray = [];
-// // Import from database all the names of the trucks and put them into namesarray
-// //function import(db)
-// //returns namesarray
-
-
-// // The submit button grabs the user input and converts it into coordinates
-// $("#submit").on("click", function(event) {
-//     event.preventDefault();
-    
-//     var location = $("#location-input").val().trim();
-//     var geocodeQuery = "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + googlemapskey;
-
-//     var repeat = repeatCheck(namesarray,location);
-//     if (location == ""){
-//         console.log("no Input");
-//     } else if (repeat === true){
-//         console.log("name repeat");
-//     } else {
-//         mapQuery(adrr);
-//         //add marker here
-//     }
-
-// });  

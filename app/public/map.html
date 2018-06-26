@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Max Liao">
 
-    <title>Project Two Map</title>
+    <title>Food Truck Finder; Map</title>
     
     <!-- <style>
       /* Set the size of the div element that contains the map */
@@ -18,7 +18,10 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+  
+  <!-- Materialize -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  
   <!-- Local CSS -->
   <!-- <link rel="stylesheet" href="css/reset.css"> -->
   <link rel="stylesheet" href="css/style.css">
@@ -31,11 +34,27 @@
   </head>
 
   <body>
-    <div class="site-wrapper">
+      <div class="site-wrapper">
 
-      <div class="site-wrapper-inner">
+      <div class="site-wrapper-inner">        
+          <div class="navbar-fixed">
+              <nav class="red">
+                <div class="nav-wrapper container">
+                  <a href="index.html" class="brand-logo left">Truck Finder</a>
+                  <ul class="right">
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="map.html">Map</a></li>
+                      <li><a href="truckTable.html">Trucks</a></li>
+                      <li><a href="userInput.html">User Input</a></li>
+                  </ul>
+                </div>
+              </nav>
+              <!-- <div class="card-panel center yellow mini-head">
+                <h3>Food Trucks</h3>
+              </div> -->
+            </div>
 
-        <div class="cover-container">
+        <!-- <div class="cover-container">
 
           <div class="masthead clearfix">
             <div class="inner">
@@ -50,14 +69,14 @@
                 <li class="active"><a href="/map">Map</a></li>
               </ul>
             </nav>
-          </div>
-
+          </div>  -->
+        
           <!-- Food Truck Info -->
+          <hr>
           <div>
             <div class="jumbotron" id="Mapjumbo">
-              <h1 class="text-center">Food Truck Info!</h1>
-              <br>
-              <hr>
+
+              <!-- <h1 class="text-center">Food Truck Info!</h1> -->
               <div class="row">
                 <div class="col-lg-4">
                   <p id = "truck-name"></p>
@@ -81,8 +100,7 @@
     <!-- Initialize Google Maps -->
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6b6PThKZfWpNBOo_s6f1caBl9iB2PG4E&callback=initMap"></script> -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6b6PThKZfWpNBOo_s6f1caBl9iB2PG4E"></script>
-  
-    <!-- Script -->
     <script type="text/javascript" src="./js/map.js"></script>
+    <script type="text/javascript" src="./js/twitter.js"></script>
   </body>
 </html>
